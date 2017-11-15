@@ -1,0 +1,24 @@
+.footer-widget, .header-seperation, .page-sidebar, .details-status, .header .notifcation-center, .page-sidebar.mini{
+	background-color: #F7B758 !important;
+}
+.header .nav > li.dropdown .active, .page-sidebar.mini .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar.mini .page-sidebar-wrapper > ul > li:hover > a{
+	background-color: #F29200;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a{
+	background-color: #F29200;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li > a, .page-sidebar .page-sidebar-wrapper > ul > li a i{
+	color: white;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li > ul.sub-menu {
+	background-color: #F7B758 !important;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li > ul.sub-menu > li a:hover {
+	background-color: #F29200 !important;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li > ul.sub-menu > li.active{
+	background-color: #F29200 !important;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li.active {
+	background-color: #F29200 !important;
+}
