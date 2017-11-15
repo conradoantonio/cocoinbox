@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Faq;
 use App\Menu;
 use App\Cupon;
+use App\Horario;
 use App\Pedidos;
 use App\Usuario;
 use App\Servicio;
@@ -39,6 +40,8 @@ class dataAppController extends Controller
     function __construct() {
         date_default_timezone_set('America/Mexico_City');
         $this->actual_datetime = date('Y-m-d H:i:s');
+        $this->actual_time = date('H:i:s');
+        $this->day_number = date('w');
     }
 
     /**
@@ -439,6 +442,24 @@ class dataAppController extends Controller
     }
 
     /**
+     * Valida si es un horario válido para realizar pedidos.
+     *
+     * @return boolean
+     */
+    public function validar_horario()
+    {
+        $dia = $this->day_number;
+        $hora = $this->actual_time;
+        $horario = Horario::whereRaw("(? BETWEEN hora_inicio AND hora_fin) AND dia = ?")
+        ->setBindings([$hora, $dia])
+        ->first();
+
+        return $horario ? true : false;
+    }
+
+    
+
+    /**
      * Busca si existe un usuario con un customer_id_conekta en la base de datos, si lo encuentra actualiza su método de pago
      * Caso contrario, se crea un cliente con la información del request.
      * Después, se crea la orden con los datos del request llamando la función procesar_orden()
@@ -449,6 +470,10 @@ class dataAppController extends Controller
      */
     public function crear_cliente(Request $request)
     {
+        if(!$this->validar_horario()) {
+            return ['msg' => 'Timeout'];
+        }
+
         $direccion = Usuario::direccion_usuario($request->direccion_id);
         if(!$direccion) {//Si no hay una dirección de envío no se procesa el pago
             return ['msg' => 'No se agregó ninguna dirección de envío.'];
@@ -600,6 +625,8 @@ class dataAppController extends Controller
             $servicio->estado = "Jalisco";
             $servicio->pais = $direccion['pais'];
             $servicio->codigo_postal = $direccion['codigo_postal'];
+            $servicio->latitud = $direccion['latitud'];
+            $servicio->longitud = $direccion['longitud'];
             $servicio->codigo_liberacion = $this->generar_codigo_liberacion();
             $servicio->comentarios = $request->comentarios;
             $servicio->last_digits = $request->last_digits;
@@ -767,6 +794,10 @@ class dataAppController extends Controller
      */
     public function crear_pedido_efectivo(Request $request)
     {
+        if(!$this->validar_horario()) {
+            return ['msg' => 'Timeout'];
+        }
+
         $direccion = Usuario::direccion_usuario($request->direccion_id);
 
         /*Se inserta un nuevo pedido en la base de datos*/
@@ -787,6 +818,8 @@ class dataAppController extends Controller
         $servicio->estado = $direccion['estado'];
         $servicio->pais = $direccion['pais'];
         $servicio->codigo_postal = $direccion['codigo_postal'];
+        $servicio->latitud = $direccion['latitud'];
+        $servicio->longitud = $direccion['longitud'];
         $servicio->codigo_liberacion = $this->generar_codigo_liberacion();
         $servicio->comentarios = $request->comentarios;
         $servicio->datetime_formated = $request->datetime_formated;

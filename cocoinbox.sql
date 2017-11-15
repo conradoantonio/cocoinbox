@@ -83,6 +83,24 @@ CREATE TABLE `genero` (
 
 insert  into `genero`(`id`,`nombreGenero`,`status`,`created_at`,`updated_at`) values (1,'Femenino',1,'2017-01-23 17:13:32','2017-01-23 17:13:30'),(2,'Masculino',1,'2017-01-23 17:13:35','2017-01-23 17:13:33');
 
+/*Table structure for table `horarios` */
+
+DROP TABLE IF EXISTS `horarios`;
+
+CREATE TABLE `horarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hora_inicio` time DEFAULT NULL,
+  `hora_fin` time DEFAULT NULL,
+  `dia` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+/*Data for the table `horarios` */
+
+insert  into `horarios`(`id`,`hora_inicio`,`hora_fin`,`dia`,`created_at`,`updated_at`) values (1,'10:00:00','23:00:00',0,'2017-11-15 16:18:15','0000-00-00 00:00:00'),(2,'08:00:00','20:00:00',1,'2017-11-15 16:18:15','0000-00-00 00:00:00'),(3,'08:00:00','20:00:00',2,'2017-11-15 16:18:16','0000-00-00 00:00:00'),(4,'08:00:00','20:00:00',3,'2017-11-15 16:18:16','0000-00-00 00:00:00'),(5,'08:00:00','20:00:00',4,'2017-11-15 16:18:17','0000-00-00 00:00:00'),(6,'08:00:00','20:00:00',5,'2017-11-15 16:18:17','0000-00-00 00:00:00'),(7,'09:00:00','22:00:00',6,'2017-11-15 16:18:32','0000-00-00 00:00:00');
+
 /*Table structure for table `informacion_empresa` */
 
 DROP TABLE IF EXISTS `informacion_empresa`;
@@ -208,6 +226,7 @@ CREATE TABLE `servicio_detalles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `servicio_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
+  `categoria_id` int(11) DEFAULT NULL,
   `nombre_producto` varchar(255) DEFAULT NULL,
   `foto_producto` varchar(100) DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL,
@@ -219,11 +238,11 @@ CREATE TABLE `servicio_detalles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `servicio_detalles` */
 
-insert  into `servicio_detalles`(`id`,`servicio_id`,`producto_id`,`nombre_producto`,`foto_producto`,`precio`,`cantidad`,`porciones_adicionales`,`precio_porcion`,`peso_porcion`,`drink`,`created_at`,`updated_at`) values (1,1,1,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(2,1,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(3,2,1,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(4,2,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(5,3,1,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(6,3,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-31 10:59:09','2017-10-31 10:59:09');
+insert  into `servicio_detalles`(`id`,`servicio_id`,`producto_id`,`categoria_id`,`nombre_producto`,`foto_producto`,`precio`,`cantidad`,`porciones_adicionales`,`precio_porcion`,`peso_porcion`,`drink`,`created_at`,`updated_at`) values (1,1,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(2,1,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(3,2,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(4,2,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(5,3,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(6,3,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(7,4,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00','100',0,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(8,4,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(9,5,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00','100',0,'2017-11-15 16:37:12','2017-11-15 16:37:12'),(10,5,4,4,'Mezcal (chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-11-15 16:37:12','2017-11-15 16:37:12');
 
 /*Table structure for table `servicios` */
 
@@ -256,14 +275,15 @@ CREATE TABLE `servicios` (
   `puntuacion` int(11) DEFAULT NULL,
   `codigo_liberacion` varchar(10) DEFAULT NULL,
   `last_digits` varchar(10) DEFAULT NULL,
+  `datetime_formated` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `servicios` */
 
-insert  into `servicios`(`id`,`usuario_id`,`nombre_cliente`,`correo_cliente`,`conekta_order_id`,`customer_id_conekta`,`costo_total`,`telefono`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`ciudad`,`estado`,`pais`,`codigo_postal`,`comentarios`,`repartidor_id`,`status`,`activo`,`tipo_pago`,`is_finished`,`puntuacion`,`codigo_liberacion`,`last_digits`,`created_at`,`updated_at`) values (1,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'pending_payment',1,'efectivo',0,NULL,'TJ7IRHCJ',NULL,'2017-10-30 15:41:00','2017-11-02 00:09:04'),(2,1,'Conrado','anton_con@hotmail.com','ord_2hUGBQehMzbBQcomF','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',1,NULL,'PUR4QKWR','4242','2017-10-30 15:41:02','2017-10-31 15:56:17'),(3,1,'Conrado','anton_con@hotmail.com','ord_2hUXRjZ6WZgWAJveC','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',0,NULL,'LTV7RY6P','4242','2017-10-31 10:58:58','2017-11-01 18:19:01');
+insert  into `servicios`(`id`,`usuario_id`,`nombre_cliente`,`correo_cliente`,`conekta_order_id`,`customer_id_conekta`,`costo_total`,`telefono`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`ciudad`,`estado`,`pais`,`codigo_postal`,`comentarios`,`repartidor_id`,`status`,`activo`,`tipo_pago`,`is_finished`,`puntuacion`,`codigo_liberacion`,`last_digits`,`datetime_formated`,`created_at`,`updated_at`) values (1,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'pending_payment',1,'efectivo',0,NULL,'TJ7IRHCJ',NULL,NULL,'2017-10-30 15:41:00','2017-11-02 00:09:04'),(2,1,'Conrado','anton_con@hotmail.com','ord_2hUGBQehMzbBQcomF','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',1,NULL,'PUR4QKWR','4242',NULL,'2017-10-30 15:41:02','2017-10-31 15:56:17'),(3,1,'Conrado','anton_con@hotmail.com','ord_2hUXRjZ6WZgWAJveC','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110','Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',0,NULL,'LTV7RY6P','4242',NULL,'2017-10-31 10:58:58','2017-11-01 18:19:01'),(4,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,0,'pending_payment',0,'efectivo',0,NULL,'HTWHJERB',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-14 12:23:09','2017-11-14 12:23:10'),(5,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,0,'pending_payment',0,'efectivo',0,NULL,'HFI5SW5F',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-15 16:37:11','2017-11-15 16:37:12');
 
 /*Table structure for table `tipo_pregunta` */
 
@@ -306,14 +326,16 @@ DROP TABLE IF EXISTS `usuario`;
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `nombre` varchar(200) NOT NULL,
   `apellido` varchar(200) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `foto_perfil` varchar(100) DEFAULT NULL,
+  `foto_perfil` varchar(100) DEFAULT 'http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg',
   `celular` varchar(18) DEFAULT NULL,
   `customer_id_conekta` varchar(255) DEFAULT NULL,
   `tipo` tinyint(4) DEFAULT '1',
+  `red_social` tinyint(4) DEFAULT NULL,
+  `player_id` varchar(155) DEFAULT NULL,
   `status` tinyint(4) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -322,7 +344,7 @@ CREATE TABLE `usuario` (
 
 /*Data for the table `usuario` */
 
-insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`tipo`,`status`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','img/usuario_app/default.jpg','9801010','cus_2hUD9SwS135vWZXJw',1,1,'2017-10-24 22:40:39','2017-10-25 16:16:05'),(2,'a83f0f76c2afad4f5d7260824430b798','Manuel','Rosales','many@hotmail.com','img/usuario_app/default.jpg','6699333627',NULL,2,2,'2017-10-25 13:12:13','2017-11-02 12:17:08');
+insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`tipo`,`red_social`,`player_id`,`status`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','9801010','cus_2hUD9SwS135vWZXJw',1,NULL,'76ece62b-bcfe-468c-8a78-839aeaa8c5fa',1,'2017-10-24 22:40:39','2017-11-14 16:29:18'),(2,'a83f0f76c2afad4f5d7260824430b798','Manuel','Rosales','many@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','6699333627',NULL,2,NULL,NULL,2,'2017-10-25 13:12:13','2017-11-02 12:17:08');
 
 /*Table structure for table `usuario_direcciones` */
 
@@ -331,17 +353,19 @@ DROP TABLE IF EXISTS `usuario_direcciones`;
 CREATE TABLE `usuario_direcciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_id` int(11) DEFAULT NULL,
-  `recibidor` varchar(255) DEFAULT NULL,
-  `calle` varchar(255) DEFAULT NULL,
+  `recibidor` varchar(255) NOT NULL,
+  `calle` varchar(255) NOT NULL,
   `entre` text,
   `num_ext` varchar(10) DEFAULT NULL,
   `num_int` varchar(10) DEFAULT NULL,
-  `estado` varchar(255) DEFAULT NULL,
-  `ciudad` varchar(255) DEFAULT NULL,
-  `pais` varchar(10) DEFAULT NULL,
-  `codigo_postal` varchar(10) DEFAULT NULL,
+  `estado` varchar(255) NOT NULL,
+  `ciudad` varchar(255) NOT NULL,
+  `pais` varchar(10) NOT NULL,
+  `codigo_postal` varchar(10) NOT NULL,
   `residencial` tinyint(4) DEFAULT NULL,
   `is_main` tinyint(4) DEFAULT NULL,
+  `latitud` varchar(30) NOT NULL,
+  `longitud` varchar(30) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -349,7 +373,7 @@ CREATE TABLE `usuario_direcciones` (
 
 /*Data for the table `usuario_direcciones` */
 
-insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Jalisco','Zapopan','MX','45110',0,0,'2017-10-17 21:17:15','2017-10-17 21:17:24');
+insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Jalisco','Zapopan','MX','45110',0,0,'','','2017-10-17 21:17:15','2017-10-17 21:17:24');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

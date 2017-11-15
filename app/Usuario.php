@@ -79,7 +79,7 @@ class Usuario extends Model
     {
         DB::setFetchMode(PDO::FETCH_ASSOC);
 
-        return DB::table('usuario_direcciones')->where('id', $id)->first();
+        return UsuarioDireccion::where('id', $id)->first();
     }
 
     /**
