@@ -50,6 +50,14 @@ Route::group(['prefix' => 'repartidores'], function () {
 	Route::post('cambiar/status','RepartidoresController@cambiar_status');//Cambia el status de un repartidor
 });
 
+/*-- Rutas para la pestaña de horarios--*/
+Route::group(['prefix' => 'horarios'], function () {
+	Route::get('/','HorariosController@index');//Carga la tabla de horarios
+	Route::post('guardar','HorariosController@guardar');//Guarda los datos de un repartidor
+	Route::post('editar','HorariosController@editar');//Edita los datos de un repartidor
+	Route::post('cambiar/status','HorariosController@cambiar_status');//Cambia el status de un repartidor
+});
+
 /*-- Ruta para la pestaña de productos --*/
 Route::get('/productos','ProductosController@index');//Carga la tabla de productos del sistema
 Route::post('/productos/guardar', 'ProductosController@guardar_producto');//Guarda un producto

@@ -214,6 +214,15 @@
                 </li>
                 <!-- END SINGLE LINK -->
                 
+                <!-- BEGIN SINGLE LINK -->
+                <li class="{{$menu == 'Horarios' ? 'active' : ''}}">
+                    <a href="{{url('horarios')}}">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        <span class="title">Horarios</span>
+                    </a>
+                </li>
+                <!-- END SINGLE LINK -->
+
                 <!-- BEGIN ONE LEVEL MENU -->
                 <li class="{{$menu == 'Usuarios' ? 'open start' : ''}}">
                     <a href="javascript:;">

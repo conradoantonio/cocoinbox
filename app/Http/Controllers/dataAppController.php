@@ -439,25 +439,7 @@ class dataAppController extends Controller
     {
         $title = $menu = 'Pedidos';
         return view('pruebas_conekta.form_prueba', ['menu' => $menu, 'title' => $title]);
-    }
-
-    /**
-     * Valida si es un horario válido para realizar pedidos.
-     *
-     * @return boolean
-     */
-    public function validar_horario()
-    {
-        $dia = $this->day_number;
-        $hora = $this->actual_time;
-        $horario = Horario::whereRaw("(? BETWEEN hora_inicio AND hora_fin) AND dia = ?")
-        ->setBindings([$hora, $dia])
-        ->first();
-
-        return $horario ? true : false;
-    }
-
-    
+    }    
 
     /**
      * Busca si existe un usuario con un customer_id_conekta en la base de datos, si lo encuentra actualiza su método de pago
@@ -872,6 +854,22 @@ class dataAppController extends Controller
             }
         }
         return $total;
+    }
+
+    /**
+     * Valida si es un horario válido para realizar pedidos.
+     *
+     * @return boolean
+     */
+    public function validar_horario()
+    {
+        $dia = $this->day_number;
+        $hora = $this->actual_time;
+        $horario = Horario::whereRaw("(? BETWEEN hora_inicio AND hora_fin) AND dia = ?")
+        ->setBindings([$hora, $dia])
+        ->first();
+
+        return $horario ? true : false;
     }
 
     /**

@@ -21,8 +21,8 @@ class Servicio extends Model
      */
     protected $fillable = [
         'nombre_cliente', 'correo_cliente', 'conekta_order_id', 'customer_id_conekta', 'costo_total', 'telefono', 'recibidor', 'calle', 
-        'num_ext', 'num_int', 'ciudad', 'estado', 'pais', 'codigo_postal', 'latitud', 'longitud', 'comentarios', 'datetime_formated', 'repartidor_id', 'activo', 
-        'status', 'tipo_pago', 'is_finished', 'puntuacion', 'codigo_liberacion', 'last_digits', 'created_at'
+        'num_ext', 'num_int', 'ciudad', 'estado', 'pais', 'codigo_postal', 'latitud', 'longitud', 'comentarios', 'datetime_formated', 
+        'repartidor_id', 'activo', 'status', 'tipo_pago', 'is_finished', 'puntuacion', 'codigo_liberacion', 'last_digits', 'created_at'
     ];
 
     /**
