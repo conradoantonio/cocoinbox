@@ -865,7 +865,7 @@ class dataAppController extends Controller
     {
         $dia = $this->day_number;
         $hora = $this->actual_time;
-        $horario = Horario::whereRaw("(? BETWEEN hora_inicio AND hora_fin) AND dia = ?")
+        $horario = Horario::whereRaw("(? BETWEEN hora_inicio AND hora_fin) AND dia = ? AND status = 1")
         ->setBindings([$hora, $dia])
         ->first();
 

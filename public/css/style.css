@@ -4344,7 +4344,7 @@ form legend,
 .transparent .input-group-btn:first-child > .btn,
 .transparent .input-group-btn:first-child > .dropdown-toggle,
 .transparent .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
-  border-right: 0px;
+  /*border-right: 0px;*/
   border-left: 1px solid #e5e9ec;
 }
 .transparent .input-group .form-control:last-child,

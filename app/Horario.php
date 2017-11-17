@@ -15,6 +15,6 @@ class Horario extends Model
      * Define el nombre de los campos que podrán ser alterados de la tabla del modelo.
      */
     protected $fillable = [
-    	'hora_inicio', 'hora_fin', 'dia', 'created_at'
+    	'hora_inicio', 'hora_fin', 'dia', 'status', 'created_at'
     ];
 }
