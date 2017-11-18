@@ -1095,12 +1095,13 @@ class dataAppController extends Controller
     */
     public function enviar_notificacion_pedido_cercano(Request $request)
     {
+        $player_ids [] = Usuario::obtener_player_id($request->usuario_id);
+
         $app_id = $this->app_customer_id;
         $app_customer_key = $this->app_customer_key;
         $header = $request->header;
         $mensaje = $request->mensaje;
         $data = $request->data;
-        $player_ids = $request->player_ids;
 
         $content = array(
             "en" => $mensaje
