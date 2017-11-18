@@ -20,7 +20,7 @@ class ServicioDetalle extends Model
      */
     protected $fillable = [
         'servicio_id', 'producto_id', 'nombre_producto', 'foto_producto', 'precio', 'cantidad', 
-        'porciones_adicionales', 'precio_porcion', 'peso_porcion', 'drink', 'created_at'
+        'gramos_base', 'porciones_adicionales', 'precio_porcion', 'peso_porcion', 'drink', 'created_at'
     ];
 
     /**

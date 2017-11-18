@@ -8,6 +8,7 @@
             <th class="">Descripción</th>
             <th class="hide">Categoria_id</th>
             <th class="hide">Precio porción</th>
+            <th class="hide">Gramos base</th>
             <th class="hide">Cantidad porción</th>
             <th class="hide">Precio bebida chica</th>
             <th class="hide">Precio bebida grande</th>
@@ -31,6 +32,7 @@
                     <td class="text"><span>{{$producto->descripcion}}</span></td>
                     <td class="hide">{{$producto->categoria_id}}</td>
                     <td class="hide">{{$producto->precio_porcion}}</td>
+                    <td class="hide">{{$producto->gramos_base}}</td>
                     <td class="hide">{{$producto->cantidad_porcion}}</td>
                     <td class="hide">{{$producto->precio_chico}}</td>
                     <td class="hide">{{$producto->precio_grande}}</td>

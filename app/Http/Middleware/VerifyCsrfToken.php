@@ -53,5 +53,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/app/actualizar_coordenadas_repartidor',
         '/app/obtener_coordenadas_pedido',
         '/app/actualizar_player_id',
+        '/app/enviar_notificacion_pedido_cercano'
     ];
 }

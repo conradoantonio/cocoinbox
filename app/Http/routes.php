@@ -128,46 +128,45 @@ Route::get('/data','estadosController@analytics');//Devuelve los datos de google
 
 /**
  *===========================================================================================================================================================
- *=                                             Empiezan las funciones relacionadas a la api para la aplicación                                             =
+ *=                                               Empiezan las rutas relacionadas a la api para la aplicación                                               =
  *===========================================================================================================================================================
  */
-Route::get('/form','dataAppController@cargar_form_conekta');//Carga el formulario de prueba de conekta
 
-Route::post('/generar_token','dataAppController@generar_token');//Genera un token de prueba
-Route::post('/post_send','dataAppController@post_send');//Procesa los datos después de generar el token
-Route::post('app/validar_cargo','dataAppController@crear_cliente');//Crea un cliente
-Route::post('app/validar_cargo_efectivo','dataAppController@crear_pedido_efectivo');//Crea un pedido en efectivo.
+Route::group(['prefix' => 'app'], function () {
+	#Rutas de pagos
+	Route::post('validar_cargo','dataAppController@crear_cliente');//Crea un cliente
+	Route::post('validar_cargo_efectivo','dataAppController@crear_pedido_efectivo');//Crea un pedido en efectivo.
 
-//Route::post('/crear_cliente','dataAppController@crear_cliente');//Crea un cliente
-Route::post('/procesar_orden','dataAppController@procesar_orden');//Procesa una orden
-Route::post('/app/orden_empresa','dataAppController@obtener_ordenes');//Obtiene las pedidos de las empresas
+	#Rutas para la aplicación
+	Route::post('registro_usuario','dataAppController@registro_app');//Registra un usuario en la aplicación.
+	Route::post('login/cliente','dataAppController@login_app_cliente');//Valida el inicio de sesión de un usuario cliente en la aplicación.
+	Route::post('login/repartidor','dataAppController@login_app_repartidor');//Valida el inicio de sesión de un usuario repartidor en la aplicación.
+	Route::post('actualizar_usuario','dataAppController@actualizar_datos_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
+	Route::post('actualizar_contra','dataAppController@actualizar_password_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
+	Route::post('recuperar_contra','dataAppController@recuperar_contra');//Envía una contraseña nueva generada automáticamente al correo del usuario.
+	Route::post('actualizar_foto','dataAppController@actualizar_foto');//Actualiza la foto de perfil de un usuario.
+	Route::post('agregar_direccion','dataAppController@agregar_direccion_usuario_app');//Agrega una dirección para el usuario.
+	Route::post('actualizar_direccion','dataAppController@actualizar_direccion_usuario_app');//Actualiza una dirección del usuario.
+	Route::post('listar_direcciones','dataAppController@listar_direcciones');//Muestra una lista de todas las direcciones del usuario de la aplicación.
+	Route::post('eliminar_direccion','dataAppController@eliminar_direccion_usuario_app');//Elimina una dirección del usuario de la aplicación.
+	Route::post('calificar_servicio','dataAppController@calificar_servicio');//Califica un servicio y lo marca como terminado.
+	Route::post('liberar_pedido','dataAppController@liberar_pedido');//Termina un pedido a través del código de liberación en caso de ser correcto.
+	Route::get('productos_categoria','dataAppController@productos_categoria');//Regresa todos los productos enlistados por categorias.
+	Route::get('preguntas_frecuentes','dataAppController@obtener_preguntas_frecuentes');//Regresa todas las preguntas frecuentes de la aplicación.
+	Route::post('obtener_pedidos_repartidor','dataAppController@obtener_pedidos_repartidor');//Devuelve los pedidos asignados a un repartidor.
+	Route::post('obtener_pedidos_usuario','dataAppController@obtener_pedidos_usuario');//Devuelve los pedidos del usuario hechas desde la aplicación.
 
-Route::post('/app/registro_usuario','dataAppController@registro_app');//Registra un usuario en la aplicación.
-Route::post('/app/login/cliente','dataAppController@login_app_cliente');//Valida el inicio de sesión de un usuario cliente en la aplicación.
-Route::post('/app/login/repartidor','dataAppController@login_app_repartidor');//Valida el inicio de sesión de un usuario repartidor en la aplicación.
-Route::post('/app/actualizar_usuario','dataAppController@actualizar_datos_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
-Route::post('/app/actualizar_contra','dataAppController@actualizar_password_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
-Route::post('/app/recuperar_contra','dataAppController@recuperar_contra');//Envía una contraseña nueva generada automáticamente al correo del usuario.
-Route::post('/app/actualizar_foto','dataAppController@actualizar_foto');//Actualiza la foto de perfil de un usuario.
-Route::post('/app/agregar_direccion','dataAppController@agregar_direccion_usuario_app');//Agrega una dirección para el usuario.
-Route::post('/app/actualizar_direccion','dataAppController@actualizar_direccion_usuario_app');//Actualiza una dirección del usuario.
-Route::post('/app/listar_direcciones','dataAppController@listar_direcciones');//Muestra una lista de todas las direcciones del usuario de la aplicación.
-Route::post('/app/eliminar_direccion','dataAppController@eliminar_direccion_usuario_app');//Elimina una dirección del usuario de la aplicación.
-Route::post('/app/calificar_servicio','dataAppController@calificar_servicio');//Califica un servicio y lo marca como terminado.
-Route::post('/app/liberar_pedido','dataAppController@liberar_pedido');//Termina un pedido a través del código de liberación en caso de ser correcto.
-Route::get('/app/productos_categoria','dataAppController@productos_categoria');//Regresa todos los productos enlistados por categorias.
-Route::get('/app/usuarios/servicios/{usuario_id}','dataAppController@listar_servicios_usuario');//Regresa todos los servicios que tiene un usuario dividiéndolos entre pendientes y finalizados.
-Route::get('/app/servicios_por_calificar_cliente/{cliente_id}','dataAppController@servicios_sin_calificar_cliente');//Regresa todos los servicios pendientes por calificar que tiene un cliente.
-Route::get('/app/preguntas_frecuentes','dataAppController@obtener_preguntas_frecuentes');//Regresa todas las preguntas frecuentes de la aplicación.
-Route::post('/app/obtener_pedidos_repartidor','dataAppController@obtener_pedidos_repartidor');//Devuelve los pedidos asignados a un repartidor.
-Route::post('/app/obtener_pedidos_usuario','dataAppController@obtener_pedidos_usuario');//Devuelve los pedidos del usuario hechas desde la aplicación.
+	#rutas para los favoritos
+	Route::post('guardar_pedido_favoritos','dataAppController@guardar_pedido_favoritos');//Guarda un pedido como favorito y guarda sus detalles.
+	Route::post('remover_pedido_favoritos','dataAppController@remover_pedido_favoritos');//Remueve un pedido como favorito y elimina también sus detalles.
 
-Route::post('/app/guardar_pedido_favoritos','dataAppController@guardar_pedido_favoritos');//Guarda un pedido como favorito y guarda sus detalles.
-Route::post('/app/remover_pedido_favoritos','dataAppController@remover_pedido_favoritos');//Remueve un pedido como favorito y elimina también sus detalles.
+	#Rutas de la app del repartidor
+	Route::post('encaminar_pedido','dataAppController@encaminar_pedido');//Marca como activo un pedido y guarda las coordenadas del repartidor.
+	Route::post('actualizar_coordenadas_repartidor','dataAppController@actualizar_coordenadas_repartidor');//Actualiza las coordenadas de un repartidor.
+	Route::post('obtener_coordenadas_pedido','dataAppController@obtener_coordenadas_pedido');//Obtiene las coordenadas de un pedido.
 
-Route::post('/app/encaminar_pedido','dataAppController@encaminar_pedido');//Marca como activo un pedido y guarda las coordenadas del repartidor.
-Route::post('/app/actualizar_coordenadas_repartidor','dataAppController@actualizar_coordenadas_repartidor');//Actualiza las coordenadas de un repartidor.
-Route::post('/app/obtener_coordenadas_pedido','dataAppController@obtener_coordenadas_pedido');//Obtiene las coordenadas de un pedido.
+	#Notificaciones con one signal
+	Route::post('actualizar_player_id','dataAppController@actualizar_player_id');//Actualiza el player id de un usuario de la aplicación
+	Route::post('enviar_notificacion_pedido_cercano','dataAppController@enviar_notificacion_pedido_cercano');//Envía una notificación individual a un usuario cliente que le indica que su pedido está a aproximadamente 100 metros de llegar.
+});
 
-#Notificaciones con one signal
-Route::post('/app/actualizar_player_id','dataAppController@actualizar_player_id');//Actualiza el player id de un usuario de la aplicación

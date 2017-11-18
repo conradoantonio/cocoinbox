@@ -15,6 +15,7 @@
                             <li class="list-group-item"><span class="label_show">Método de pago: <span id="order_metodo_pago"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Estatus de compra: <span id="order_status"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Fecha y hora en que se realizó el pedido: <span id="order_date"></span></span></li>
+                            <li class="list-group-item"><span class="label_show">Código de liberación: <span id="order_codigo_liberacion"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Cliente: <span id="order_client"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Comentarios: <span id="order_comentarios"></span></span></li>
                             <li class="list-group-item" id="li_puntuacion"><span class="label_show">Puntuación: <span id="puntuacion"></span></span></li>

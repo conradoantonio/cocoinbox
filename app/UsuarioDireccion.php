@@ -14,5 +14,5 @@ class UsuarioDireccion extends Model
     /**
      * Define el nombre de los campos que podrán ser alterados de la tabla del modelo.
      */
-    protected $fillable = ['usuario_id', 'recibidor', 'calle', 'entre', 'num_ext', 'num_int', 'estado', 'ciudad', 'pais', 'codigo_postal', 'latitud', 'longitud'];
+    protected $fillable = ['usuario_id', 'recibidor', 'calle', 'colonia', 'num_ext', 'num_int', 'estado', 'ciudad', 'pais', 'codigo_postal', 'latitud', 'longitud'];
 }

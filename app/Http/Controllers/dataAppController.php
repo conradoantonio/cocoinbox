@@ -42,6 +42,8 @@ class dataAppController extends Controller
         $this->actual_datetime = date('Y-m-d H:i:s');
         $this->actual_time = date('H:i:s');
         $this->day_number = date('w');
+        $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
+        $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
     }
 
     /**
@@ -193,7 +195,7 @@ class dataAppController extends Controller
         $direccion->usuario_id = $request->usuario_id;
         $direccion->recibidor = $request->recibidor;
         $direccion->calle = $request->calle;
-        $direccion->entre = $request->entre;
+        $direccion->colonia = $request->colonia;
         $direccion->num_ext = $request->num_ext;
         $direccion->num_int = $request->num_int;
         $direccion->estado =  $request->estado;
@@ -223,7 +225,7 @@ class dataAppController extends Controller
         if (count($direccion)) {
             $direccion->recibidor = $request->recibidor;
             $direccion->calle = $request->calle;
-            $direccion->entre = $request->entre;
+            $direccion->colonia = $request->colonia;
             $direccion->num_ext = $request->num_ext;
             $direccion->num_int = $request->num_int;
             $direccion->estado =  $request->estado;
@@ -299,6 +301,13 @@ class dataAppController extends Controller
             ->where('codigo_liberacion', $codigo)
             ->update(['is_finished' => 1, 'status' => 'paid', 'activo' => 0]);
 
+            $player_id [] = Usuario::obtener_player_id($pedido->usuario_id);
+            $mensaje = "Su pedido ha sido entregado exitósamente, gracias por confiar en nosotros.";
+            $header = "Pedido finalizado.";
+            $data = array('msg' => 'Pedido finalizado');
+            //$this->enviar_notificacion_a_todos();
+            $this->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key);
+
             return ['msg' => 'Pedido liberado'];
         }
         return 0;
@@ -332,7 +341,7 @@ class dataAppController extends Controller
     {
         $categorias = Categoria::select(DB::raw('id, categoria'))->get();
         foreach ($categorias as $categoria) {
-            $categoria->productos = Producto::select(DB::raw('id, nombre, precio, descripcion, precio_porcion, cantidad_porcion, foto_producto, precio_chico, precio_grande, status'))
+            $categoria->productos = Producto::select(DB::raw('id, nombre, precio, descripcion, gramos_base, precio_porcion, cantidad_porcion, foto_producto, precio_chico, precio_grande, status'))
             ->where('categoria_id', $categoria->id)
             ->get();
         }
@@ -649,6 +658,7 @@ class dataAppController extends Controller
             $item->foto_producto = $producto_detalle['foto_producto'];
             $item->precio = $producto['unit_price'];
             $item->cantidad = $producto['quantity'];
+            $item->gramos_base = $producto_detalle['gramos_base'];
             $item->porciones_adicionales = $producto['aditional_portion'] ? $producto['aditional_portion'] : '';
             $item->precio_porcion = $producto_detalle['precio_porcion'];
             $item->peso_porcion = $producto_detalle['cantidad_porcion'];
@@ -1016,20 +1026,20 @@ class dataAppController extends Controller
         );
         
         $fields = array(
-            'app_id' => "15c4f224-e280-436d-9bb8-481c11fb4c3c",
+            'app_id' => $this->app_customer_id,//"15c4f224-e280-436d-9bb8-481c11fb4c3c",
             'included_segments' => array('All'),
             'data' => array("foo" => "bar"),
             'contents' => $content
         );
         
         $fields = json_encode($fields);
-        print("\nJSON sent:\n");
-        print($fields);
+        /*print("\nJSON sent:\n");
+        print($fields);*/
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-                                                   'Authorization: Basic NzY0NmYwOGUtYTdkNy00ODljLWJkZGYtMTcwMDdmNjRiZGZk'));
+                                                   'Authorization: Basic ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -1039,30 +1049,36 @@ class dataAppController extends Controller
         $response = curl_exec($ch);
         curl_close($ch);
         
-        return $response;
+        //return $response;
     }
 
-    public function send_individual_message() 
+    /**
+    * Envía una notificación individual a un usuario que puede ser repartidor o cliente
+    * @return $response
+    */
+    public function enviar_notificacion_individual($app_id, $header, $mensaje, $data, $player_ids, $app_customer_key)
     {
         $content = array(
-            "en" => 'English Message'
+            "en" => $mensaje
         );
         
         $fields = array(
-            'app_id' => "15c4f224-e280-436d-9bb8-481c11fb4c3c",
-            'include_player_ids' => array("c7a4d2a7-126d-4995-b0e6-1f1b093a7d48"),
-            'data' => array("foo" => "bar"),
-            'contents' => $content
+            'app_id' => $app_id,
+            'include_player_ids' => $player_ids,
+            'data' => $data,
+            'header' => $header,
+            'contents' => $content,
+            'small_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png',
+            'large_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png'
         );
         
-        $fields = json_encode($fields);
-        print("\nJSON sent:\n");
-        print($fields);
         
+        $fields = json_encode($fields);
+ 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-                                                   'Authorization: Basic NzY0NmYwOGUtYTdkNy00ODljLWJkZGYtMTcwMDdmNjRiZGZk'));
+                                                   "Authorization: Basic $app_customer_key"));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -1071,7 +1087,48 @@ class dataAppController extends Controller
 
         $response = curl_exec($ch);
         curl_close($ch);
+    }
+
+    /**
+    * Envía una notificación individual a un usuario cliente que le indica que su pedido está a aproximadamente 100 metros de llegar.
+    * @return $response
+    */
+    public function enviar_notificacion_pedido_cercano(Request $request)
+    {
+        $app_id = $this->app_customer_id;
+        $app_customer_key = $this->app_customer_key;
+        $header = $request->header;
+        $mensaje = $request->mensaje;
+        $data = $request->data;
+        $player_ids = $request->player_ids;
+
+        $content = array(
+            "en" => $mensaje
+        );
         
-        return $response;
+        $fields = array(
+            'app_id' => $app_id,
+            'include_player_ids' => $player_ids,
+            'data' => $data,
+            'header' => $header,
+            'contents' => $content,
+            'small_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png',
+            'large_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png'
+        );
+
+        $fields = json_encode($fields);
+ 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                   "Authorization: Basic $app_customer_key"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
     }
 }

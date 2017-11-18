@@ -14,6 +14,7 @@ btn_enviar_producto.on('click', function() {
     validarInput($('input#precio'), regExprNum) == false ? inputs.push('Precio') : ''
     validarInput($('textarea#descripcion'), regExprTexto) == false ? inputs.push('Descripción') : ''
     validarSelect($('select#categoria_id')) == false ? inputs.push('Categoría') : ''
+    validarInput($('input#gramos_base'), regExprNum) == false ? inputs.push('Gramos base') : ''
     validarInput($('input#cantidad_porcion'), regExprNum) == false ? inputs.push('Porción') : ''
     validarInput($('input#precio_porcion'), regExprNum) == false ? inputs.push('Precio por porción') : ''
     validarInput($('input#precio_chico'), regExprNum) == false ? inputs.push('Precio bebida chica') : ''
@@ -38,6 +39,9 @@ $( "input#precio" ).blur(function() {
 });
 $( "select#categoria_id" ).change(function() {
     validarSelect($(this));
+});
+$( "input#gramos_base" ).blur(function() {
+    validarInput($(this), regExprNum);
 });
 $( "input#cantidad_porcion" ).blur(function() {
     validarInput($(this), regExprNum);

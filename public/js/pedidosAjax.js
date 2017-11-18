@@ -24,6 +24,7 @@ function obtenerInfoPedido(status,pedido_id,token) {
             $('span#order_metodo_pago').html(data.tipo_pago == 'efectivo' ? "<span class='label label-default'>Efectivo</span>" : "<span class='label label-info'>Tarjeta</span>");
             $('span#order_status').html(data.status == 'paid' ? "<span class='label label-success'>Pagado</span>" : "<span class='label label-important'>Pendiente a pagar</span>");
             $('span#order_date').text(data.created_at);
+            $('span#order_codigo_liberacion').text(data.codigo_liberacion);
             $('span#order_client').text(data.nombre_cliente);
             $('span#order_comentarios').text(setText($('span#order_comentarios'), data.comentarios));
 

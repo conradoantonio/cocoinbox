@@ -61,10 +61,16 @@ input:-webkit-autofill {
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-xs-12" id="div_precio">
+                            <div class="col-sm-6 col-xs-12" id="div_precio">
                                 <div class="form-group">
                                     <label for="precio">Precio</label>
                                     <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12" id="div_gramos_base">
+                                <div class="form-group">
+                                    <label for="gramos_base">Gramos base</label>
+                                    <input type="text" class="form-control" id="gramos_base" name="gramos_base" placeholder="Gramos base">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-xs-12" id="div_cantidad_porcion">
@@ -218,7 +224,7 @@ input:-webkit-autofill {
 
  $( "select#categoria_id" ).change(function() {
     cat_id = $(this).val();
-    $('div#div_precio, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
+    $('div#div_precio, div#div_gramos_base, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
 
     activarCampos(cat_id);
 });
@@ -241,7 +247,7 @@ $('body').delegate('button#exportar_productos_excel','click', function() {
 });
 
 $('body').delegate('button#nuevo_producto','click', function() {
-    $('div#div_precio, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
+    $('div#div_precio, div#div_gramos_base, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
     $('select.form-control').val(0);
     $('input.form-control').val('');
     $('div#foto_producto').hide();
@@ -250,7 +256,7 @@ $('body').delegate('button#nuevo_producto','click', function() {
 });
 
 $('body').delegate('.editar_producto','click', function() {
-    $('div#div_precio, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
+    $('div#div_precio, div#div_gramos_base, div#div_cantidad_porcion, div#div_precio_porcion, div#div_precio_chico, div#div_precio_grande').hide();
     $('input.form-control').val('');
     id = $(this).parent().siblings("td:nth-child(2)").text(),
     nombre = $(this).parent().siblings("td:nth-child(3)").text(),
@@ -258,10 +264,11 @@ $('body').delegate('.editar_producto','click', function() {
     descripcion = $(this).parent().siblings("td:nth-child(5)").text(),
     categoria_id = $(this).parent().siblings("td:nth-child(6)").text(),
     precio_porcion = $(this).parent().siblings("td:nth-child(7)").text(),
-    cantidad_porcion = $(this).parent().siblings("td:nth-child(8)").text(),
-    precio_chico = $(this).parent().siblings("td:nth-child(9)").text(),
-    precio_grande = $(this).parent().siblings("td:nth-child(10)").text(),
-    imagen = $(this).parent().siblings("td:nth-child(11)").text(),
+    gramos_base = $(this).parent().siblings("td:nth-child(8)").text(),
+    cantidad_porcion = $(this).parent().siblings("td:nth-child(9)").text(),
+    precio_chico = $(this).parent().siblings("td:nth-child(10)").text(),
+    precio_grande = $(this).parent().siblings("td:nth-child(11)").text(),
+    imagen = $(this).parent().siblings("td:nth-child(12)").text(),
     token = $('#token').val();
 
     activarCampos(categoria_id);
@@ -271,6 +278,7 @@ $('body').delegate('.editar_producto','click', function() {
     $("#formulario_producto input#id").val(id);
     $("#formulario_producto input#nombre").val(nombre);
     $("#formulario_producto input#precio").val(precio);
+    $("#formulario_producto input#gramos_base").val(gramos_base);
     $("#formulario_producto input#precio_porcion").val(precio_porcion);
     $("#formulario_producto input#cantidad_porcion").val(cantidad_porcion);
     $("#formulario_producto input#precio_chico").val(precio_chico);
@@ -345,8 +353,8 @@ function activarCampos (cat_id) {
     if (cat_id == 4) {//Bebidas
         $('div#div_precio_chico, div#div_precio_grande').show();
         //$("input#precio_chico, input#precio_grande").val('');
-    } else if (cat_id != 4 && cat_id != 0){//Proteina, carbohidratos, ensaladas
-        $('div#div_precio, div#div_cantidad_porcion, div#div_precio_porcion').show();
+    } else if (cat_id != 4 && cat_id != 0) {//Proteina, carbohidratos, ensaladas
+        $('div#div_precio, div#div_gramos_base, div#div_cantidad_porcion, div#div_precio_porcion').show();
         //$("input#cantidad_porcion, input#precio_porcion").val('');
     }
 }

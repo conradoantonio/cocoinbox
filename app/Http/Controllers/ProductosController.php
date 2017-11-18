@@ -55,6 +55,7 @@ class ProductosController extends Controller
             $producto->precio_grande = $request->precio_grande;
         } else if ($categoria_id != 4 && $categoria_id != 0) {
             $producto->precio = $request->precio;
+            $producto->gramos_base = $request->gramos_base;
             $producto->cantidad_porcion = $request->cantidad_porcion;
             $producto->precio_porcion = $request->precio_porcion;
         }
@@ -100,12 +101,15 @@ class ProductosController extends Controller
                 $producto->precio = null;
                 $producto->precio_chico = $request->precio_chico;
                 $producto->precio_grande = $request->precio_grande;
+                $producto->gramos_base = null;
                 $producto->cantidad_porcion = null;
                 $producto->precio_porcion = null;
+
             } else if ($categoria_id != 4 && $categoria_id != 0) {
                 $producto->precio = $request->precio;
                 $producto->precio_chico = null;
                 $producto->precio_grande = null;
+                $producto->gramos_base = $request->gramos_base;
                 $producto->cantidad_porcion = $request->cantidad_porcion;
                 $producto->precio_porcion = $request->precio_porcion;
             }

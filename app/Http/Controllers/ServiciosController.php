@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Usuario;
 use App\Servicio;
 use App\Repartidor;
 use App\ServicioDetalle;
@@ -19,6 +20,10 @@ require_once("conekta-php-master/lib/Conekta.php");
 
 class ServiciosController extends Controller
 {
+    function __construct() {
+        $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
+        $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
+    }
     /**
      * Muestra los pedidos en curso.
      *
@@ -71,6 +76,15 @@ class ServiciosController extends Controller
     {
         Servicio::where('id', $request->servicio_id)
         ->update(['repartidor_id' => $request->repartidor_id]);
+
+        $pedido = Servicio::where('id', $request->servicio_id)
+        ->first();
+
+        $player_id [] = Usuario::obtener_player_id($pedido->usuario_id);
+        $mensaje = "Hemos asignado su pedido a uno de nuestros repartidores, en breve se pondrá en camino a tu dirección.";
+        $header = "¡Pedido asignado a repartidor!";
+        $data = array('msg' => 'repartidor asignado');
+        app('App\Http\Controllers\dataAppController')->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key);
 
         return ['msg' => 'Repartidor asignado correctamente al pedido con el ID '. $request->servicio_id];
     }
