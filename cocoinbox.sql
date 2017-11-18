@@ -167,6 +167,7 @@ CREATE TABLE `productos` (
   `foto_producto` varchar(255) DEFAULT NULL,
   `descripcion` text,
   `categoria_id` int(11) DEFAULT '0',
+  `gramos_base` varchar(50) DEFAULT NULL,
   `precio_porcion` decimal(10,2) DEFAULT NULL,
   `cantidad_porcion` varchar(100) DEFAULT NULL,
   `precio_chico` decimal(10,2) DEFAULT NULL,
@@ -179,7 +180,7 @@ CREATE TABLE `productos` (
 
 /*Data for the table `productos` */
 
-insert  into `productos`(`id`,`nombre`,`precio`,`foto_producto`,`descripcion`,`categoria_id`,`precio_porcion`,`cantidad_porcion`,`precio_chico`,`precio_grande`,`status`,`created_at`,`updated_at`) values (1,'Pozole','89.00','img/productos/carbohidratos1.jpg','Rico pozole tradicional de México, el plato incluye 500gr.',2,'20.00','100',NULL,NULL,1,'2017-11-10 17:31:35','2017-10-27 22:17:05'),(2,'Ensalada de patatas','90.00','img/productos/ensaladaverde.jpg','Rica ensalada que incluye lechuga, tomate, patata y un rico queso parmezano. El plato incluye 400gr.',3,'15.00','125',NULL,NULL,1,'2017-10-27 17:18:11','2017-10-27 22:18:11'),(3,'Corte de arrachera con camarones cocidos.','300.00','img/productos/proteina1.png','Delicioso corte de carne de arrachera acompañado de camarones cocidos y verduras. El plato incluye 500gr.',1,'50.00','50',NULL,NULL,1,'2017-10-27 17:20:41','2017-10-27 22:20:41'),(4,'Mezcal',NULL,'img/productos/bebida1.jpg','Exquisita bebida elaborada a partir de la destilación del corazón del maguey.',4,NULL,NULL,'45.00','55.00',1,'2017-10-30 12:01:28','2017-10-30 18:01:28');
+insert  into `productos`(`id`,`nombre`,`precio`,`foto_producto`,`descripcion`,`categoria_id`,`gramos_base`,`precio_porcion`,`cantidad_porcion`,`precio_chico`,`precio_grande`,`status`,`created_at`,`updated_at`) values (1,'Pozole','89.00','img/productos/carbohidratos1.jpg','Rico pozole tradicional de México, el plato incluye 500gr.',2,'400','20.00','100',NULL,NULL,1,'2017-11-17 10:49:38','2017-11-17 16:49:38'),(2,'Ensalada de patatas','90.00','img/productos/ensaladaverde.jpg','Rica ensalada que incluye lechuga, tomate, patata y un rico queso parmezano. El plato incluye 400gr.',3,'500','15.00','125',NULL,NULL,1,'2017-11-17 10:40:06','2017-10-27 22:18:11'),(3,'Corte de arrachera con camarones cocidos.','300.00','img/productos/proteina1.png','Delicioso corte de carne de arrachera acompañado de camarones cocidos y verduras. El plato incluye 500gr.',1,'375','50.00','50',NULL,NULL,1,'2017-11-17 10:40:10','2017-10-27 22:20:41'),(4,'Mezcal',NULL,'img/productos/bebida1.jpg','Exquisita bebida elaborada a partir de la destilación del corazón del maguey.',4,NULL,NULL,NULL,'45.00','55.00',1,'2017-11-17 10:52:08','2017-11-17 16:52:08');
 
 /*Table structure for table `registro_logs` */
 
@@ -232,6 +233,7 @@ CREATE TABLE `servicio_detalles` (
   `foto_producto` varchar(100) DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
+  `gramos_base` varchar(80) DEFAULT NULL,
   `porciones_adicionales` varchar(100) DEFAULT NULL,
   `precio_porcion` decimal(10,2) DEFAULT NULL,
   `peso_porcion` varchar(100) DEFAULT NULL,
@@ -243,7 +245,7 @@ CREATE TABLE `servicio_detalles` (
 
 /*Data for the table `servicio_detalles` */
 
-insert  into `servicio_detalles`(`id`,`servicio_id`,`producto_id`,`categoria_id`,`nombre_producto`,`foto_producto`,`precio`,`cantidad`,`porciones_adicionales`,`precio_porcion`,`peso_porcion`,`drink`,`created_at`,`updated_at`) values (1,1,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(2,1,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(3,2,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(4,2,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(5,3,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00',NULL,0,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(6,3,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(7,4,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00','100',0,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(8,4,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(9,5,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00','100',0,'2017-11-15 16:37:12','2017-11-15 16:37:12'),(10,5,4,4,'Mezcal (chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-11-15 16:37:12','2017-11-15 16:37:12'),(11,6,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,'2','20.00','100',0,'2017-11-15 16:55:51','2017-11-15 16:55:51'),(12,6,4,4,'Mezcal (chico)','img/productos/bebida1.jpg','4500.00',2,'',NULL,NULL,1,'2017-11-15 16:55:52','2017-11-15 16:55:52');
+insert  into `servicio_detalles`(`id`,`servicio_id`,`producto_id`,`categoria_id`,`nombre_producto`,`foto_producto`,`precio`,`cantidad`,`gramos_base`,`porciones_adicionales`,`precio_porcion`,`peso_porcion`,`drink`,`created_at`,`updated_at`) values (1,1,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00',NULL,0,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(2,1,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-10-30 15:41:00','2017-10-30 15:41:00'),(3,2,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00',NULL,0,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(4,2,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-10-30 15:41:13','2017-10-30 15:41:13'),(5,3,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00',NULL,0,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(6,3,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-10-31 10:59:09','2017-10-31 10:59:09'),(7,4,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00','100',0,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(8,4,4,4,'Mezcal (Chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-11-14 12:23:09','2017-11-14 12:23:09'),(9,5,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00','100',0,'2017-11-15 16:37:12','2017-11-15 16:37:12'),(10,5,4,4,'Mezcal (chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-11-15 16:37:12','2017-11-15 16:37:12'),(11,6,1,2,'Pozole','img/productos/carbohidratos1.jpg','8900.00',2,NULL,'2','20.00','100',0,'2017-11-15 16:55:51','2017-11-15 16:55:51'),(12,6,4,4,'Mezcal (chico)','img/productos/bebida1.jpg','4500.00',2,NULL,'',NULL,NULL,1,'2017-11-15 16:55:52','2017-11-15 16:55:52');
 
 /*Table structure for table `servicios` */
 
@@ -358,7 +360,7 @@ CREATE TABLE `usuario_direcciones` (
   `usuario_id` int(11) DEFAULT NULL,
   `recibidor` varchar(255) NOT NULL,
   `calle` varchar(255) NOT NULL,
-  `entre` text,
+  `colonia` varchar(80) DEFAULT NULL,
   `num_ext` varchar(10) DEFAULT NULL,
   `num_int` varchar(10) DEFAULT NULL,
   `estado` varchar(255) NOT NULL,
@@ -376,7 +378,7 @@ CREATE TABLE `usuario_direcciones` (
 
 /*Data for the table `usuario_direcciones` */
 
-insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Jalisco','Zapopan','MX','45110',0,0,'','','2017-10-17 21:17:15','2017-10-17 21:17:24');
+insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`colonia`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ',NULL,'5125','16','Jalisco','Zapopan','MX','45110',0,0,'','','2017-10-17 21:17:15','2017-10-17 21:17:24');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
