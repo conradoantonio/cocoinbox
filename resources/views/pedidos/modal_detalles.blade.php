@@ -65,7 +65,7 @@
                             <li class="list-group-item"><span class="label_show">Ciudad: <span id="city"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Código Postal: <span id="postal_code"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Calle: <span id="street"></span></span></li>
-                            <li class="list-group-item"><span class="label_show">Entre calle(s): <span id="between"></span></span></li>
+                            <li class="list-group-item"><span class="label_show">Colonia: <span id="colony"></span></span></li>
                             <li class="list-group-item" id="li_no_int"><span class="label_show">Número interior: <span id="no_int"></span></span></li>
                             <li class="list-group-item"><span class="label_show">Número exterior: <span id="no_ext"></span></span></li>
                         </ul>

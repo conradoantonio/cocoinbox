@@ -44,6 +44,8 @@ class dataAppController extends Controller
         $this->day_number = date('w');
         $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
         $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
+        $this->app_customer_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
+        $this->app_deliever_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
     }
 
     /**
@@ -306,7 +308,7 @@ class dataAppController extends Controller
             $header = "Pedido finalizado.";
             $data = array('msg' => 'Pedido finalizado');
             //$this->enviar_notificacion_a_todos();
-            $this->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key);
+            $this->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key, $this->app_customer_icon);
 
             return ['msg' => 'Pedido liberado'];
         }
@@ -609,7 +611,7 @@ class dataAppController extends Controller
             $servicio->status = 'paid';
             $servicio->recibidor = $direccion['recibidor'];
             $servicio->calle = $direccion['calle'];
-            $servicio->entre = $direccion['entre'];
+            $servicio->colonia = $direccion['colonia'];
             $servicio->num_ext = $direccion['num_ext'];
             $servicio->num_int = $direccion['num_int'];
             $servicio->ciudad = $direccion['ciudad'];
@@ -693,6 +695,8 @@ class dataAppController extends Controller
 
         foreach ($pedidos as $pedido) {
             $pedido->detalles = Servicio::detalle_pedido($pedido->id);
+            /*$pedido->latitud = floatval($pedido->latitud);
+            $pedido->longitud = floatval($pedido->longitud);*/
         }
         return $pedidos;
     }
@@ -704,11 +708,7 @@ class dataAppController extends Controller
      */
     public function obtener_pedidos_usuario(Request $request)
     {
-        if ($request->finalizado) {
-            $pedidos = Servicio::obtener_pedidos_finalizados_usuario($request->usuario_id);
-        } else {
-            $pedidos = Servicio::obtener_pedidos_activos_usuario($request->usuario_id);
-        }
+        $pedidos = Servicio::obtener_pedidos_usuario($request->usuario_id);
 
         foreach ($pedidos as $pedido) {
             $pedido->detalles = Servicio::detalle_pedido($pedido->id);
@@ -803,7 +803,7 @@ class dataAppController extends Controller
         $servicio->status = 'pending_payment';
         $servicio->recibidor = $direccion['recibidor'];
         $servicio->calle = $direccion['calle'];
-        $servicio->entre = $direccion['entre'];
+        $servicio->colonia = $direccion['colonia'];
         $servicio->num_ext = $direccion['num_ext'];
         $servicio->num_int = $direccion['num_int'];
         $servicio->ciudad = $direccion['ciudad'];
@@ -1056,7 +1056,7 @@ class dataAppController extends Controller
     * Envía una notificación individual a un usuario que puede ser repartidor o cliente
     * @return $response
     */
-    public function enviar_notificacion_individual($app_id, $header, $mensaje, $data, $player_ids, $app_customer_key)
+    public function enviar_notificacion_individual($app_id, $header, $mensaje, $data, $player_ids, $app_customer_key, $icon)
     {
         $content = array(
             "en" => $mensaje
@@ -1068,8 +1068,8 @@ class dataAppController extends Controller
             'data' => $data,
             'header' => $header,
             'contents' => $content,
-            'small_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png',
-            'large_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png'
+            'small_icon' => $icon,
+            'large_icon' => $icon
         );
         
         
@@ -1113,8 +1113,8 @@ class dataAppController extends Controller
             'data' => $data,
             'header' => $header,
             'contents' => $content,
-            'small_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png',
-            'large_icon' => 'http://cocoinbox.bsmx.tech/public/img/icon.png'
+            'small_icon' => $this->app_customer_icon,
+            'large_icon' => $this->app_customer_icon
         );
 
         $fields = json_encode($fields);

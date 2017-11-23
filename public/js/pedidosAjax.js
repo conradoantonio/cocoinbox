@@ -49,7 +49,7 @@ function obtenerInfoPedido(status,pedido_id,token) {
             $('span#city').text(data.ciudad);
             $('span#postal_code').text(data.codigo_postal);
             $('span#street').text(data.calle);
-            $('span#between').text(data.entre);
+            $('span#colony').text(data.colonia);
             $('span#no_int').text(setText($('span#no_int'), data.num_int));
             $('span#no_ext').text(data.num_ext);
 

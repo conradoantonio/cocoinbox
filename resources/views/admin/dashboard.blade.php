@@ -92,6 +92,7 @@ textarea {
 <script type="text/javascript">
 var ctx = document.getElementById("myChart");
 var ventas = <?php echo $ventas_semanales;?>;
+console.info(ventas);
 
 var data = {
     labels: ventas.dias_semana,

@@ -23,6 +23,10 @@ class ServiciosController extends Controller
     function __construct() {
         $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
         $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
+        $this->app_customer_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
+        $this->app_deliever_id = "4aa0dfbf-a53d-4ed8-ac09-94ef906aed6b";
+        $this->app_deliever_key = "NTJjN2RiOTMtYjBjMy00OGY2LWJmMjEtMzk4OTYyMzdjMmVh";
+        $this->app_deliever_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
     }
     /**
      * Muestra los pedidos en curso.
@@ -84,7 +88,13 @@ class ServiciosController extends Controller
         $mensaje = "Hemos asignado su pedido a uno de nuestros repartidores, en breve se pondrá en camino a tu dirección.";
         $header = "¡Pedido asignado a repartidor!";
         $data = array('msg' => 'repartidor asignado');
-        app('App\Http\Controllers\dataAppController')->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key);
+        app('App\Http\Controllers\dataAppController')->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key, $this->app_customer_icon);
+
+        $repartidor_player_id [] = Usuario::obtener_player_id($request->repartidor_id);
+        $mensaje_repartidor = "¡Tienes un nuevo pedido para entregar!";
+        $header = "¡Tienes un nuevo pedido para entregar!";
+        $data = array('msg' => 'nuevo pedido asignado');
+        app('App\Http\Controllers\dataAppController')->enviar_notificacion_individual($this->app_deliever_id, $header, $mensaje_repartidor, $data, $repartidor_player_id, $this->app_deliever_key, $this->app_deliever_icon);
 
         return ['msg' => 'Repartidor asignado correctamente al pedido con el ID '. $request->servicio_id];
     }

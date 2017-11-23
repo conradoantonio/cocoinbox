@@ -120,12 +120,14 @@ class Servicio extends Model
      *
      * @return Regresa los pedidos activos de un usuario cliente
      */
-    public static function obtener_pedidos_activos_usuario($usuario_id)
+    public static function obtener_pedidos_usuario($usuario_id)
     {
         return Servicio::select(DB::raw('servicios.*, usuario.nombre, usuario.apellido, usuario.foto_perfil'))
         ->where('usuario_id', $usuario_id)
         ->leftJoin('usuario', 'servicios.repartidor_id', '=', 'usuario.id')
-        ->where('is_finished', 0)
+        //->where('is_finished', 0)
+        ->orderBy('is_finished')
+        ->orderBy('created_at')
         ->get();
     }
 
@@ -133,7 +135,7 @@ class Servicio extends Model
      *
      * @return Regresa los pedidos finalizados de un usuario cliente
      */
-    public static function obtener_pedidos_finalizados_usuario($usuario_id)
+    /*public static function obtener_pedidos_finalizados_usuario($usuario_id)
     {
         return Servicio::select(DB::raw('servicios.*, usuario.nombre, usuario.apellido, usuario.foto_perfil'))
         ->where('usuario_id', $usuario_id)
@@ -141,7 +143,7 @@ class Servicio extends Model
         ->where('is_finished', 1)
         ->where('status', 'paid')
         ->get();
-    }
+    }*/
 
     /**
      *
