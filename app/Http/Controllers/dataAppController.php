@@ -1056,10 +1056,14 @@ class dataAppController extends Controller
     * Envía una notificación individual a un usuario que puede ser repartidor o cliente
     * @return $response
     */
-    public function enviar_notificacion_individual($app_id, $header, $mensaje, $data, $player_ids, $app_customer_key, $icon)
+    public function enviar_notificacion_individual($app_id, $titulo, $mensaje, $data, $player_ids, $app_customer_key, $icon)
     {
         $content = array(
             "en" => $mensaje
+        );
+
+        $header = array(
+            "en" => $titulo
         );
         
         $fields = array(

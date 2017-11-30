@@ -58,6 +58,13 @@ Route::group(['prefix' => 'horarios', 'middleware' => 'auth'], function () {
 	Route::post('cambiar/status','HorariosController@cambiar_status');//Cambia el status de un repartidor
 });
 
+/*-- Rutas para las notificaciones --*/
+Route::group(['prefix' => 'notificaciones_app', 'middleware' => 'auth'], function () {
+	Route::get('/','NotificacionesController@index');//Carga el panel para mandar notificaciones a la aplicación.
+	Route::post('/enviar/general','NotificacionesController@enviar_notificacion_general');//Manda una notificación a todos los usuarios suscritos de la aplicación.
+	Route::post('/enviar/individual','NotificacionesController@enviar_notificacion_individual');//Manda una notificación a los usuarios seleccionados de la áplicación.
+});
+
 /*-- Ruta para la pestaña de productos --*/
 Route::get('/productos','ProductosController@index');//Carga la tabla de productos del sistema
 Route::post('/productos/guardar', 'ProductosController@guardar_producto');//Guarda un producto
@@ -111,9 +118,6 @@ Route::post('/pedidos/asignar_repartidor','ServiciosController@asignar_repartido
 Route::get('/configuracion/info_empresa','ConfiguracionController@info_empresa');//Carga la vista para la información de la empresa.
 Route::post('/configuracion/info_empresa/guardar','ConfiguracionController@guardar_info_empresa');//Guarda la información de la empresa.
 Route::post('/configuracion/info_empresa/editar','ConfiguracionController@editar_info_empresa');//Edita la información de la empresa.
-
-/*-- Ruta para iframe --*/
-Route::get('/notificaciones_app','ionicController@index');//Carga el login de ionic
 
 /*-- Rutas para la pestaña cargar imagenes --*/
 Route::get('/cargar_imagenes','ImagenController@index');//Carga el formulario de dropzone para cargar imagenes
