@@ -15,10 +15,12 @@ class NotificacionesController  extends Controller
     function __construct() {
         date_default_timezone_set('America/Mexico_City');
         $this->summer = date('I');
-        $this->app_id = "ca42c5c4-5e4e-499c-86f7-164bcb911b13";
-        $this->app_key = "OWIyYThiZTQtMjI1Mi00OTQ5LWExMjktMDZjMWMwY2FjYTI0";
-        $this->small_icon = "https://navidad.belyapp.com/img/small_icon.png";
-        $this->regular_icon = "https://navidad.belyapp.com/img/regular_icon.png";
+        $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
+        $this->app_delivery_id = "4aa0dfbf-a53d-4ed8-ac09-94ef906aed6b";
+        $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
+        $this->app_delivery_key = "NTJjN2RiOTMtYjBjMy00OGY2LWJmMjEtMzk4OTYyMzdjMmVh";
+        $this->app_customer_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
+        $this->app_delivery_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
     }
     /**
      * Display a listing of the resource.
@@ -30,8 +32,9 @@ class NotificacionesController  extends Controller
         $title = 'Notificaciones App';
         $menu = 'Ionic';
         $actual_date = date('Y-m-d');
-        $usuarios = Usuario::where('status', 1)->get();
-        return view('notificaciones.index', ['menu' => $menu, 'title' => $title, 'usuarios' => $usuarios, 'start_date' => $actual_date]);
+        $clientes = Usuario::where('tipo', 1)->where('status', 1)->get();
+        $repartidores = Usuario::where('tipo', 2)->where('status', 1)->get();
+        return view('notificaciones.index', ['menu' => $menu, 'title' => $title, 'clientes' => $clientes, 'repartidores' => $repartidores, 'start_date' => $actual_date]);
     }
 
     /**
@@ -44,7 +47,9 @@ class NotificacionesController  extends Controller
         $titulo = $req->titulo;
         $dia = $req->fecha;
         $hora = $req->hora;
-
+        $app_id = $req->aplicacion == 1 ? $this->app_customer_id : $this->app_delivery_id;
+        $app_key = $req->aplicacion == 1 ? $this->app_customer_key : $this->app_delivery_key;
+        $icon = $req->aplicacion == 1 ? $this->app_customer_icon : $this->app_delivery_icon;
         $content = array(
             "en" => $mensaje
         );
@@ -54,12 +59,12 @@ class NotificacionesController  extends Controller
         );
         
         $fields = array(
-            'app_id' => $this->app_id,//"15c4f224-e280-436d-9bb8-481c11fb4c3c",
+            'app_id' => $app_id,
             'included_segments' => array('All'),
             'data' => array("type" => "general"),
             'headings' => $header,
             'contents' => $content,
-            'large_icon' => $this->regular_icon
+            'large_icon' => $icon
         );
 
         if ($dia && $hora) {
@@ -69,13 +74,11 @@ class NotificacionesController  extends Controller
         }
         
         $fields = json_encode($fields);
-        /*print("\nJSON sent:\n");
-        print($fields);*/
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-                                                   "Authorization: Basic $this->app_key"));
+                                                   "Authorization: Basic $app_key"));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -104,6 +107,9 @@ class NotificacionesController  extends Controller
         $titulo = $req->titulo;
         $dia = $req->fecha;
         $hora = $req->hora;
+        $app_id = $req->aplicacion == 1 ? $this->app_customer_id : $this->app_delivery_id;
+        $app_key = $req->aplicacion == 1 ? $this->app_customer_key : $this->app_delivery_key;
+        $icon = $req->aplicacion == 1 ? $this->app_customer_icon : $this->app_delivery_icon;
 
         $content = array(
             "en" => $mensaje
@@ -114,12 +120,12 @@ class NotificacionesController  extends Controller
         );
         
         $fields = array(
-            'app_id' => $this->app_id,
+            'app_id' => $app_id,
             'include_player_ids' => $player_ids,
             'data' => array('type' => 'individual'),
             'headings' => $header,
             'contents' => $content,
-            'large_icon' => $this->regular_icon
+            'large_icon' => $icon
         );
 
         if ($dia && $hora) {
@@ -133,7 +139,7 @@ class NotificacionesController  extends Controller
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-                                                   "Authorization: Basic $this->app_key"));
+                                                   "Authorization: Basic $app_key"));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);

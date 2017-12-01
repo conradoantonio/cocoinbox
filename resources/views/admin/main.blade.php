@@ -213,7 +213,16 @@
                     </a>
                 </li>
                 <!-- END SINGLE LINK -->
-                
+
+                <!-- BEGIN SINGLE LINK -->
+                <li class="{{$menu == 'Geolocalización' ? 'active' : ''}}">
+                    <a href="{{url('geolocalizacion')}}">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span class="title">Geolocalización</span>
+                    </a>
+                </li>
+                <!-- END SINGLE LINK -->
+
                 <!-- BEGIN SINGLE LINK -->
                 <li class="{{$menu == 'Horarios' ? 'active' : ''}}">
                     <a href="{{url('horarios')}}">

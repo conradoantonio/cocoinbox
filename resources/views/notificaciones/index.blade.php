@@ -41,13 +41,16 @@
 				                        <form id="form_notificaciones_generales" action="{{url('notificaciones_app/enviar/general')}}" onsubmit="return false" method="POST" autocomplete="off">
 										    <input type="hidden" name="_token" id="token" value="{!! csrf_token() !!}">
 									        <div class="row">
-									        	{{-- <label for="usuarios_id">Usuarios</label>
-												<select name="usuarios_id[]" id="usuarios_id" class="select2" multiple="multiple" style="width: 100%">
-													<option value="0" disabled>Seleccionar usuarios</option>
-													@foreach($usuarios as $usuario)
-														<option value="{{$usuario->id}}">{{$usuario->nombre}} {{$usuario->apelido}}</option>
-													@endforeach
-												</select> --}}
+									        	<div class="col-sm-12 col-xs-12">
+						                            <div class="form-group">
+											        	<label for="aplicacion">Aplicación</label>
+														<select name="aplicacion" id="aplicacion_general" name="aplicacion" class="form-control" style="width: 100%">
+															<option value="0" selected>Seleccionar aplicación</option>
+															<option value="1">Cliente</option>
+															<option value="2">Repartidor</option>
+														</select>
+													</div>
+												</div>
 									        	<div class="col-sm-12 col-xs-12 hide">
 									                <div class="form-group">
 									                    <label for="tipo_notificacion_general">Tipo</label>
@@ -89,12 +92,16 @@
 				                        <form id="form_notificaciones_individuales" action="{{url('notificaciones_app/enviar/individual')}}" onsubmit="return false" method="POST" autocomplete="off">
 										    <input type="hidden" name="_token" id="token" value="{!! csrf_token() !!}">
 			                    			<div class="row">
-			                    				<div class="col-sm-12 col-xs-12 hide">
-									                <div class="form-group">
-									                    <label for="tipo_notificacion_individual">Tipo</label>
-									                    <input type="text" class="form-control" id="tipo_notificacion_individual" value="individual" name="tipo_notificacion">
-									                </div>
-									            </div>
+			                    				<div class="col-sm-12 col-xs-12">
+						                            <div class="form-group">
+											        	<label for="aplicacion">Aplicación</label>
+														<select name="aplicacion" id="aplicacion_individual" name="aplicacion" class="form-control" style="width: 100%">
+															<option value="0" selected>Seleccionar aplicación</option>
+															<option value="1">Cliente</option>
+															<option value="2">Repartidor</option>
+														</select>
+													</div>
+												</div>
 			                    				<div class="col-sm-6 col-xs-12 clockpicker">
 				                                    <div class="form-group">
 				                                        <label for="hora_individual">Hora</label>
@@ -124,9 +131,6 @@
 							                            <label for="usuarios_id">Usuarios</label>
 														<select name="usuarios_id[]" id="usuarios_id" class="select2" multiple="multiple" style="width: 100%">
 															<option value="0" disabled>Seleccionar usuarios</option>
-															@foreach($usuarios as $usuario)
-																<option value="{{$usuario->id}}">{{$usuario->nombre}} {{$usuario->apelido}}</option>
-															@endforeach
 														</select>
 													</div>
 						                        </div>
@@ -155,11 +159,13 @@
 		$('#tab-01 a').click(function (e) {
 			e.preventDefault();
         	$('.form-control').parent().removeClass("has-error");
-        	$('.form-control').val('');
+        	$('input.form-control, textarea.form-control').val('');
+        	$('select.form-control').val(0);
+        	$('select#usuarios_id').select2("val", "");
         	$('select').parent().children('div.select2').children('ul.select2-choices').removeClass("select-error");
 			inputs = [];
     		msgError = '';
-		})
+		});
 		
 		$(".select2").select2();
 
@@ -173,6 +179,26 @@
 	        format: "yyyy-mm-dd",
 	    });
 	    $('#fecha_general, #fecha_individual').datepicker('setStartDate', "{{$start_date}}");
-	})
+	});
+
+	$( "select#aplicacion_individual" ).change(function() {
+		select = $('#usuarios_id');
+		options = null;
+		select.children().remove();
+
+	    if ($(this).val() == 1) {
+			options = <?php echo $clientes;?>;
+	    } else if ($(this).val() == 2) {
+			options = <?php echo $repartidores;?>;
+	    }
+
+	    if (options) {
+    		select.append("<option value='0' disabled>Seleccionar usuarios</option>");
+															
+	    	options.forEach( function (opt) {
+	    		select.append("<option value="+ opt.id +">"+ opt.nombre + ' '+ opt.apellido +"</option>");
+			});
+	    }
+	});
 </script>
 @endsection

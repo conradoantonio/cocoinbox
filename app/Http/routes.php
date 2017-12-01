@@ -50,6 +50,12 @@ Route::group(['prefix' => 'repartidores'], function () {
 	Route::post('cambiar/status','RepartidoresController@cambiar_status');//Cambia el status de un repartidor
 });
 
+/*-- Rutas para la geolocalización --*/
+Route::group(['prefix' => 'geolocalizacion', 'middleware' => 'auth'], function () {
+	Route::get('/','RepartidoresController@cargar_mapa');//Carga el mapa con la ubicación actual de los repartidores.
+	Route::post('/cargar_coordenadas','RepartidoresController@cargar_mapa');//Carga las coordenadas de los repartidores.
+});
+
 /*-- Rutas para la pestaña de horarios--*/
 Route::group(['prefix' => 'horarios', 'middleware' => 'auth'], function () {
 	Route::get('/','HorariosController@index');//Carga la tabla de horarios

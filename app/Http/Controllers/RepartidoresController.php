@@ -22,17 +22,13 @@ class RepartidoresController extends Controller
      */
     public function index(Request $request)
     {
-        if (auth()->check()) {
-            $title = "Repartidores";
-            $menu = "Repartidores";
-            $repartidores = Repartidor::repartidor_detalles();
-            if ($request->ajax()) {
-                return view('repartidores.table', ['repartidores' => $repartidores]);
-            }
-            return view('repartidores.repartidores', ['repartidores' => $repartidores, 'menu' => $menu, 'title' => $title]);
-        } else {
-            return redirect()->to('/');
+        $title = "Repartidores";
+        $menu = "Repartidores";
+        $repartidores = Repartidor::repartidor_detalles();
+        if ($request->ajax()) {
+            return view('repartidores.table', ['repartidores' => $repartidores]);
         }
+        return view('repartidores.repartidores', ['repartidores' => $repartidores, 'menu' => $menu, 'title' => $title]);
     }
 
 	/**
@@ -115,5 +111,30 @@ class RepartidoresController extends Controller
 	        $repartidor->save();
             return ['msg' => 'Saved!'];
         }
+    }
+
+    /**
+     * Dibuja un mapa con la ubicación actual de los repartidores.
+     *
+     * @return view(mapa)
+     */
+    public function cargar_mapa(Request $request) 
+    {
+        $title = $menu = "Geolocalización";
+
+        $repartidores = Usuario::leftJoin('repartidores', 'repartidores.usuario_id', '=', 'usuario.id')
+        ->where('tipo', 2)
+        ->where('status', 1)
+        ->get();
+
+        foreach ($repartidores as $row) {
+            $coordenadas[] = [$row->nombre.' '.$row->apellido, $row->latitud, $row->longitud, $row->foto_perfil];
+        }
+
+        if ($request->ajax()) {
+            return $coordenadas;
+        }
+        
+        return view('mapa.mapa', ['coordenadas' => json_encode($coordenadas), 'menu' => $menu, 'title' => $title]);
     }
 }

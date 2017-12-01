@@ -8,6 +8,7 @@ $("#enviar_notificacion_general").on('click', function() {
     inputs = [];
     msgError = '';
 
+    validarSelect($('select#aplicacion_general')) == false ? inputs.push('Aplicación') : ''
     validarInput($('input#titulo_general'), regExprTitulo) == false ? inputs.push('Título') : ''
     validarInput($('textarea#mensaje_general'), regExprContenido) == false ? inputs.push('Mensaje') : ''
 
@@ -21,6 +22,9 @@ $("#enviar_notificacion_general").on('click', function() {
     }
 });
 
+$( "select#aplicacion_general" ).change(function() {
+    validarSelect($(this));
+});
 $( "input#titulo_general" ).blur(function() {
     validarInput($(this), regExprTitulo);
 });
@@ -33,6 +37,7 @@ $("#enviar_notificacion_individual").on('click', function() {
     inputs = [];
     msgError = '';
 
+    validarSelect($('select#aplicacion_individual')) == false ? inputs.push('Aplicación') : ''
     validarInput($('input#titulo_individual'), regExprTitulo) == false ? inputs.push('Título') : ''
     validarInput($('textarea#mensaje_individual'), regExprContenido) == false ? inputs.push('Mensaje') : ''
     validarSelect($('select#usuarios_id')) == false ? inputs.push('Usuarios') : ''
@@ -47,6 +52,9 @@ $("#enviar_notificacion_individual").on('click', function() {
     }
 });
 
+$( "select#aplicacion_individual" ).change(function() {
+    validarSelect($(this));
+});
 $( "input#titulo_individual" ).blur(function() {
     validarInput($(this), regExprTitulo);
 });
@@ -71,11 +79,19 @@ function validarInput (campo,regExpr) {
 
 function validarSelect (select) {
     if ($(select).val() == '0' || $(select).val() == '' || $(select).val() == null) {
-        $(select).parent().children('div.select2').children('ul.select2-choices').addClass("select-error");
+        if ($(select).hasClass('select2')) {
+            $(select).parent().children('div.select2').children('ul.select2-choices').addClass("select-error");
+        } else {
+            $(select).parent().addClass("has-error");
+        }
         msgError = msgError + $(select).parent().children('label').text() + '\n';
         return false;
     } else {
-        $(select).parent().children('div.select2').children('ul.select2-choices').removeClass("select-error");
+        if ($(select).hasClass('select2')) {
+            $(select).parent().children('div.select2').children('ul.select2-choices').removeClass("select-error");
+        } else {
+            $(select).parent().removeClass("has-error");
+        }
         return true;
     }
 }
