@@ -51,7 +51,7 @@ class RepartidoresController extends Controller
             $usuario->correo = $request->correo;
             $usuario->celular = $request->celular;
             $usuario->tipo = 2;
-            $usuario->created_at =  $this->actual_datetime;
+            $usuario->created_at = $this->actual_datetime;
        
             $usuario->save();
             $id = $usuario->id;
@@ -88,7 +88,7 @@ class RepartidoresController extends Controller
             /*Se editan los datos del usuario del repartidor*/
             $usuario = Usuario::find($user_id);
             if ($usuario) {
-                
+
                 $request->password ? $usuario->password = md5($request->password) : '';
                 $usuario->nombre = $request->nombre;
                 $usuario->apellido = $request->apellido;

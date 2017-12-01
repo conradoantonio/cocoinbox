@@ -307,7 +307,6 @@ class dataAppController extends Controller
             $mensaje = "Su pedido ha sido entregado exitósamente, gracias por confiar en nosotros.";
             $header = "Pedido finalizado.";
             $data = array('msg' => 'Pedido finalizado');
-            //$this->enviar_notificacion_a_todos();
             $this->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key, $this->app_customer_icon);
 
             return ['msg' => 'Pedido liberado'];
@@ -938,6 +937,12 @@ class dataAppController extends Controller
         $repartidor = $this->actualizar_coordenadas($request->repartidor_id, $request->latitud, $request->longitud);
 
         if ($servicio && $repartidor) {
+            $player_id [] = Usuario::obtener_player_id($request->cliente_id);
+            $mensaje = "¡Su pedido está en camino!";
+            $header = "¡Revisa los detalles de tu pedido para ver la ubicación del repartidor en el mapa!";
+            $data = array('msg' => 'Pedido en camino');
+            $this->enviar_notificacion_individual($this->app_customer_id, $header, $mensaje, $data, $player_id, $this->app_customer_key, $this->app_customer_icon);
+
             return ['msg' => 'Las coordenadas han sido actualizadas y el pedido marcado como activo.'];
         }
         return 0;
@@ -1070,9 +1075,8 @@ class dataAppController extends Controller
             'app_id' => $app_id,
             'include_player_ids' => $player_ids,
             'data' => $data,
-            'header' => $header,
+            'headings' => $header,
             'contents' => $content,
-            'small_icon' => $icon,
             'large_icon' => $icon
         );
         
@@ -1091,6 +1095,8 @@ class dataAppController extends Controller
 
         $response = curl_exec($ch);
         curl_close($ch);
+
+        return 1;
     }
 
     /**
@@ -1099,41 +1105,55 @@ class dataAppController extends Controller
     */
     public function enviar_notificacion_pedido_cercano(Request $request)
     {
-        $player_ids [] = Usuario::obtener_player_id($request->usuario_id);
+        $servicio = Servicio::where('id', $request->pedido_id)->first();
+        if ($servicio) {
+            if ($servicio->notificado == 0) {
+                $player_ids [] = Usuario::obtener_player_id($request->usuario_id);
 
-        $app_id = $this->app_customer_id;
-        $app_customer_key = $this->app_customer_key;
-        $header = $request->header;
-        $mensaje = $request->mensaje;
-        $data = $request->data;
+                $app_id = $this->app_customer_id;
+                $app_customer_key = $this->app_customer_key;
+                $titulo = $request->header;
+                $mensaje = $request->mensaje;
+                $data = $request->data;
 
-        $content = array(
-            "en" => $mensaje
-        );
-        
-        $fields = array(
-            'app_id' => $app_id,
-            'include_player_ids' => $player_ids,
-            'data' => $data,
-            'header' => $header,
-            'contents' => $content,
-            'small_icon' => $this->app_customer_icon,
-            'large_icon' => $this->app_customer_icon
-        );
+                $content = array(
+                    "en" => $mensaje
+                );
 
-        $fields = json_encode($fields);
- 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-                                                   "Authorization: Basic $app_customer_key"));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+                $header = array(
+                    "en" => $titulo
+                );
+                
+                $fields = array(
+                    'app_id' => $app_id,
+                    'include_player_ids' => $player_ids,
+                    'data' => $data,
+                    'headings' => $header,
+                    'contents' => $content,
+                    'large_icon' => $this->app_customer_icon
+                );
 
-        $response = curl_exec($ch);
-        curl_close($ch);
+                $fields = json_encode($fields);
+         
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                           "Authorization: Basic $app_customer_key"));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                Servicio::where('id', $request->pedido_id)->update(['notificado' => 1]);
+
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
