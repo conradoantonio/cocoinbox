@@ -12,12 +12,12 @@ function guardarRepartidor(button) {
         success: function(data) {
             button.children('i').hide();
             button.attr('disabled', false);
-            $('div#editar-repartidor').modal('hide');
-            if (data.msg == 'Email unavailable') {
-                $('div#request-error').removeClass('hide');
-            } else {
+            if (data.status == 'ok') {
+                $('div#editar-repartidor').modal('hide');
                 $('div#request-error').addClass('hide');
                 refreshTable(window.location.href);
+            } else {
+                $('div#request-error').removeClass('hide');
             }
         },
         error: function(xhr, status, error) {
@@ -71,6 +71,8 @@ function refreshTable(url) {
     $('div#tabla_repartidores').empty();
     $('div#tabla_repartidores').load(url, function() {
         $('div#tabla_repartidores').fadeIn();
-        $("table#example3").dataTable();
+        $("table#example3").dataTable({
+            "aaSorting": [[ 0, "desc" ]]
+        });
     });
 }

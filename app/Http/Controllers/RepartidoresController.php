@@ -41,7 +41,7 @@ class RepartidoresController extends Controller
     	$validado = Usuario::buscar_usuario_por_correo($request->correo);
 
         if (count($validado)) {
-            return ['msg' => 'Email unavailable'];
+            return response(['msg' => 'Correo no disponible', 'status' => 'bad request'], 200);
         } else {
         	/*Creación del usuario del repartidor*/
             $usuario = new Usuario;
@@ -50,7 +50,6 @@ class RepartidoresController extends Controller
             $usuario->apellido = $request->apellido;
             $usuario->correo = $request->correo;
             $usuario->celular = $request->celular;
-            $usuario->foto_perfil = "img/usuario_app/default.jpg";
             $usuario->tipo = 2;
             $usuario->created_at =  $this->actual_datetime;
        
@@ -62,57 +61,88 @@ class RepartidoresController extends Controller
 
             $repartidor->usuario_id = $id;
 
-	        $extensiones_permitidas = array("1"=>"jpeg", "2"=>"jpg", "3"=>"png", "4"=>"gif", "5"=>"pdf");
-
-	        $file = $request->file('comprobante_domicilio');
-	        if ($file) {
-	            $extension_archivo = $file->getClientOriginalExtension();
-	            if (array_search($extension_archivo, $extensiones_permitidas)) {
-                    $file_name = time().'.'.$extension_archivo;
-	                $file_path = 'img/repartidores/comprobante_domicilio/'.$id;
-	                $file->move($file_path, $file_name);
-	                $repartidor->comprobante_domicilio = $file_path.'/'.$file_name;
-	            }
-	        }
-
-	        $file = $request->file('licencia');
-	        if ($file) {
-	            $extension_archivo = $file->getClientOriginalExtension();
-	            if (array_search($extension_archivo, $extensiones_permitidas)) {
-                    $file_name = time().'.'.$extension_archivo;
-                    $file_path = 'img/repartidores/licencia/'.$id;
-                    $file->move($file_path, $file_name);
-	                $repartidor->licencia = $file_path.'/'.$file_name;
-	            }
-	        }
-
-	        $file = $request->file('solicitud_trabajo');
-	        if ($file) {
-	            $extension_archivo = $file->getClientOriginalExtension();
-	            if (array_search($extension_archivo, $extensiones_permitidas)) {
-                    $file_name = time().'.'.$extension_archivo;
-                    $file_path = 'img/repartidores/solicitud_trabajo/'.$id;
-                    $file->move($file_path, $file_name);
-	                $repartidor->solicitud_trabajo = $file_path.'/'.$file_name;
-	            }
-	        }
-
-	        $file = $request->file('credencial_elector');
-	        if ($file) {
-	            $extension_archivo = $file->getClientOriginalExtension();
-	            if (array_search($extension_archivo, $extensiones_permitidas)) {
-                    $file_name = time().'.'.$extension_archivo;
-                    $file_path = 'img/repartidores/credencial_elector/'.$id;
-                    $file->move($file_path, $file_name);
-	                $repartidor->credencial_elector = $file_path.'/'.$file_name;
-	            }
-	        }
+            $repartidor->comprobante_domicilio = $this->validar_archivo($request->file('comprobante_domicilio'), 'comprobante_domicilio', $id);
+            $repartidor->licencia = $this->validar_archivo($request->file('licencia'), 'licencia', $id);
+            $repartidor->solicitud_trabajo = $this->validar_archivo($request->file('solicitud_trabajo'), 'solicitud_trabajo', $id);
+            $repartidor->credencial_elector = $this->validar_archivo($request->file('credencial_elector'), 'credencial_elector', $id);
 
 	        $repartidor->save();
-            return ['msg' => 'Saved!'];
+            return response(['msg' => 'Saved!', 'status' => 'ok'], 200);
         }
     }
 
+    /**
+     * Edita un repartidor y su usuario.
+     *
+     * @return json($msg)
+     */
+    public function editar(Request $request)
+    {
+        $validado = Usuario::buscar_usuario_por_correo($request->correo, $request->correo_viejo);
+        $user_id = $request->user_id;
+        $repartidor_id = $request->repartidor_id;
+
+        if (count($validado)) {
+            return response(['msg' => 'Correo no disponible', 'status' => 'bad request'], 200);
+        } else {
+            /*Se editan los datos del usuario del repartidor*/
+            $usuario = Usuario::find($user_id);
+            if ($usuario) {
+                
+                $request->password ? $usuario->password = md5($request->password) : '';
+                $usuario->nombre = $request->nombre;
+                $usuario->apellido = $request->apellido;
+                $usuario->correo = $request->correo;
+                $usuario->celular = $request->celular;
+           
+                $usuario->save();
+            }
+
+            /*Se editan los detalles del repartidor*/
+            $repartidor = Repartidor::find($repartidor_id);
+            if ($repartidor) {
+
+                $request->file('comprobante_domicilio') ? $repartidor->comprobante_domicilio = $this->validar_archivo($request->file('comprobante_domicilio'), 'comprobante_domicilio', $user_id) : '';
+                $request->file('licencia') ? $repartidor->licencia = $this->validar_archivo($request->file('licencia'), 'licencia', $user_id) : '';
+                $request->file('solicitud_trabajo') ? $repartidor->solicitud_trabajo = $this->validar_archivo($request->file('solicitud_trabajo'), 'solicitud_trabajo', $user_id) : '';
+                $request->file('credencial_elector') ? $repartidor->credencial_elector = $this->validar_archivo($request->file('credencial_elector'), 'credencial_elector', $user_id) : '';
+
+                $repartidor->save();
+            }
+
+            if ($usuario && $repartidor) {
+                return response(['msg' => 'Saved!', 'status' => 'ok'], 200);
+            } else {
+                return response(['msg' => 'Repartidor inválido o no encontrado', 'status' => 'not found'], 200);
+            }
+        }
+    }
+
+    /**
+     * Valida los archivos del repartidor.
+     *
+     * @return json($msg)
+     */
+    public function validar_archivo($file, $folder, $id)
+    {
+        $extensiones_permitidas = array("1"=>"jpeg", "2"=>"jpg", "3"=>"png", "4"=>"gif", "5"=>"pdf");
+
+        if ($file) {
+            $extension_archivo = $file->getClientOriginalExtension();
+            if (array_search($extension_archivo, $extensiones_permitidas)) {
+                $file_name = time().'.'.$extension_archivo;
+                $file_path = 'img/repartidores/'.$folder.'/'.$id;
+                $file->move($file_path, $file_name);
+                return $file_path.'/'.$file_name;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+        
     /**
      * Dibuja un mapa con la ubicación actual de los repartidores.
      *

@@ -15,10 +15,6 @@ input:-webkit-autofill {
 <div class="text-center" style="margin: 20px;">
     <h2>Lista de repartidores en la aplicación</h2>
 
-    <div class="alert alert-error hide" id="request-error">
-        <strong>Atención: </strong> El repartidor no ha sido guardado debido a que el correo otorgado no se encuentra disponible. Porfavor, intente con otro correo.
-    </div>
-
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="editar-repartidor">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -28,6 +24,9 @@ input:-webkit-autofill {
                 </div>
                 <form id="form_repartidores" onsubmit="return false" action="" enctype="multipart/form-data" method="POST" autocomplete="off">
                     <div class="modal-body">
+                        <div class="alert alert-error hide" id="request-error">
+                            <strong>Atención: </strong> El repartidor no ha sido guardado debido a que el correo otorgado no se encuentra disponible. Porfavor, intente con otro correo.
+                        </div>
                         <div class="row">
                             {!! csrf_field() !!}
                             <div class="col-sm-6 col-xs-12 hidden">
