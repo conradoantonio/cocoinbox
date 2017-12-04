@@ -204,10 +204,10 @@ $('body').delegate('.editar-repartidor','click', function() {
     solicitud_trabajo = $(this).parent().siblings("td:nth-child(11)").text(),
     credencial_elector = $(this).parent().siblings("td:nth-child(12)").text(),
 
-    com_dom_ext = comprobante_domicilio.substr(comprobante_domicilio.length - 3);
-    lic_ext = licencia.substr(licencia.length - 3);
-    sol_tra_ext = solicitud_trabajo.substr(solicitud_trabajo.length - 3);
-    cre_ele_ext = credencial_elector.substr(credencial_elector.length - 3);
+    com_dom_ext = comprobante_domicilio.slice(-3);
+    lic_ext = licencia.slice(-3);
+    sol_tra_ext = solicitud_trabajo.slice(-3);
+    cre_ele_ext = credencial_elector.slice(-3);
     
     $('a#com_dom_ext').attr('href', '{{url('')}}'+'/'+comprobante_domicilio);
     $('a#lic_ext').attr('href', '{{url('')}}'+'/'+licencia);
@@ -259,7 +259,7 @@ $('body').delegate('.eliminar-repartidor, .bloquear-repartidor, .reactivar-repar
 });
 
 function verificarDocumentos(selector, ext, titulo) {
-    if (ext == 'jpg' || ext == 'png' || ext == 'jpeg' || ext == 'gif') {//Imagen
+    if (ext == 'jpg' || ext == 'png' || ext == 'peg' || ext == 'gif') {//Imagen, se compara con peg, porque se entiende que puede ser un archivo jpeg
         selector.removeAttr('target');
         selector.attr('data-lightbox', 'roadtrip');
         selector.attr('data-title', titulo);
