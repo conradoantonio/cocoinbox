@@ -427,29 +427,6 @@ class dataAppController extends Controller
      *=                                     Empiezan las funciones relacionadas a la api de conekta                                     =
      *===================================================================================================================================
      */
-    
-    /**
-     * Genera un token
-     *
-     * @param  Request $request
-     * @return $nombre_foto si la imagen fue subida exitosamente, 0 si hubo algún error subiendo la imagen.
-     */
-    public function generar_token(Request $request)
-    {
-        return $request->conektaTokenId;
-    }
-
-    /**
-     * Carga el formulario de prueba para conekta.
-     *
-     * @param  Request $request
-     * @return $nombre_foto si la imagen fue subida exitosamente, 0 si hubo algún error subiendo la imagen.
-     */
-    public function cargar_form_conekta()
-    {
-        $title = $menu = 'Pedidos';
-        return view('pruebas_conekta.form_prueba', ['menu' => $menu, 'title' => $title]);
-    }    
 
     /**
      * Busca si existe un usuario con un customer_id_conekta en la base de datos, si lo encuentra actualiza su método de pago

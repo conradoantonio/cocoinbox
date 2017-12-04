@@ -214,11 +214,11 @@ CREATE TABLE `repartidores` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `repartidores` */
 
-insert  into `repartidores`(`id`,`usuario_id`,`comprobante_domicilio`,`licencia`,`solicitud_trabajo`,`credencial_elector`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,2,'comprobante/2/pdf','licencia/2/pdf','solicitud_trabajo/2/pdf','sdasd','20.666392231','-103.392815432','2017-10-31 15:23:32','2017-10-31 15:23:32'),(4,11,'img/repartidores/comprobante_domicilio/11/1508974534.jpg','img/repartidores/licencia/11/1508974534.jpg','img/repartidores/solicitud_trabajo/11/1508974534.png','img/repartidores/credencial_elector/11/1508974534.jpg','20.666440','-103.397547','2017-10-31 12:55:44','2017-10-25 18:35:34');
+insert  into `repartidores`(`id`,`usuario_id`,`comprobante_domicilio`,`licencia`,`solicitud_trabajo`,`credencial_elector`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,2,'img/repartidores/comprobante_domicilio/2/1512166169.jpg','img/repartidores/licencia/2/1512166169.jpg','img/repartidores/solicitud_trabajo/2/1512166169.jpg','img/repartidores/credencial_elector/2/1512166169.png','20.667601','-103.398731','2017-12-01 16:09:29','2017-12-01 16:09:29'),(2,3,'img/repartidores/comprobante_domicilio/3/1512166200.jpg','img/repartidores/licencia/3/1512424627.pdf','img/repartidores/solicitud_trabajo/3/1512166200.jpg','img/repartidores/credencial_elector/3/1512166200.jpg','20.666392231','-103.392815432','2017-12-04 15:57:07','2017-12-04 15:57:07');
 
 /*Table structure for table `servicio_detalles` */
 
@@ -262,7 +262,7 @@ CREATE TABLE `servicios` (
   `telefono` varchar(20) DEFAULT NULL,
   `recibidor` varchar(255) DEFAULT NULL,
   `calle` text,
-  `entre` text,
+  `colonia` text,
   `num_ext` varchar(10) DEFAULT NULL,
   `num_int` varchar(10) DEFAULT NULL,
   `ciudad` varchar(100) DEFAULT NULL,
@@ -275,6 +275,7 @@ CREATE TABLE `servicios` (
   `repartidor_id` int(11) DEFAULT '0',
   `status` varchar(20) DEFAULT NULL,
   `activo` tinyint(4) DEFAULT '0',
+  `notificado` tinyint(4) DEFAULT '0',
   `tipo_pago` varchar(10) DEFAULT NULL,
   `is_finished` tinyint(4) DEFAULT '0',
   `puntuacion` int(11) DEFAULT NULL,
@@ -288,7 +289,7 @@ CREATE TABLE `servicios` (
 
 /*Data for the table `servicios` */
 
-insert  into `servicios`(`id`,`usuario_id`,`nombre_cliente`,`correo_cliente`,`conekta_order_id`,`customer_id_conekta`,`costo_total`,`telefono`,`recibidor`,`calle`,`entre`,`num_ext`,`num_int`,`ciudad`,`estado`,`pais`,`codigo_postal`,`latitud`,`longitud`,`comentarios`,`repartidor_id`,`status`,`activo`,`tipo_pago`,`is_finished`,`puntuacion`,`codigo_liberacion`,`last_digits`,`datetime_formated`,`created_at`,`updated_at`) values (1,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'pending_payment',1,'efectivo',0,NULL,'TJ7IRHCJ',NULL,NULL,'2017-10-30 15:41:00','2017-11-02 00:09:04'),(2,1,'Conrado','anton_con@hotmail.com','ord_2hUGBQehMzbBQcomF','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',1,NULL,'PUR4QKWR','4242',NULL,'2017-10-30 15:41:02','2017-10-31 15:56:17'),(3,1,'Conrado','anton_con@hotmail.com','ord_2hUXRjZ6WZgWAJveC','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'paid',0,'tarjeta',0,NULL,'LTV7RY6P','4242',NULL,'2017-10-31 10:58:58','2017-11-01 18:19:01'),(4,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,'efectivo',0,NULL,'HTWHJERB',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-14 12:23:09','2017-11-14 12:23:10'),(5,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,'efectivo',0,NULL,'HFI5SW5F',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-15 16:37:11','2017-11-15 16:37:12'),(6,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,'efectivo',0,NULL,'QGLGIXHM',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-15 16:55:51','2017-11-15 16:55:52');
+insert  into `servicios`(`id`,`usuario_id`,`nombre_cliente`,`correo_cliente`,`conekta_order_id`,`customer_id_conekta`,`costo_total`,`telefono`,`recibidor`,`calle`,`colonia`,`num_ext`,`num_int`,`ciudad`,`estado`,`pais`,`codigo_postal`,`latitud`,`longitud`,`comentarios`,`repartidor_id`,`status`,`activo`,`notificado`,`tipo_pago`,`is_finished`,`puntuacion`,`codigo_liberacion`,`last_digits`,`datetime_formated`,`created_at`,`updated_at`) values (1,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'pending_payment',1,NULL,'efectivo',0,NULL,'TJ7IRHCJ',NULL,NULL,'2017-10-30 15:41:00','2017-11-02 00:09:04'),(2,1,'Conrado','anton_con@hotmail.com','ord_2hUGBQehMzbBQcomF','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'paid',0,NULL,'tarjeta',1,NULL,'PUR4QKWR','4242',NULL,'2017-10-30 15:41:02','2017-10-31 15:56:17'),(3,1,'Conrado','anton_con@hotmail.com','ord_2hUXRjZ6WZgWAJveC','cus_2hUD9SwS135vWZXJw',34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,'Le quitan la cebolla al pozole por favor.',2,'paid',0,NULL,'tarjeta',0,NULL,'LTV7RY6P','4242',NULL,'2017-10-31 10:58:58','2017-11-01 18:19:01'),(4,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,NULL,'efectivo',0,NULL,'HTWHJERB',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-14 12:23:09','2017-11-14 12:23:10'),(5,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,NULL,'efectivo',0,NULL,'HFI5SW5F',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-15 16:37:11','2017-11-15 16:37:12'),(6,1,'Conrado','anton_con@hotmail.com',NULL,NULL,34800,'6699333627','Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ','Naciones unidas y Eqa do queiros','5125','16','Zapopan','Jalisco','MX','45110',NULL,NULL,NULL,0,'pending_payment',0,NULL,'efectivo',0,NULL,'QGLGIXHM',NULL,'Viernes 13 de Octubre, 11:30 Hrs','2017-11-15 16:55:51','2017-11-15 16:55:52');
 
 /*Table structure for table `tipo_pregunta` */
 
@@ -345,11 +346,11 @@ CREATE TABLE `usuario` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `usuario` */
 
-insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`tipo`,`red_social`,`player_id`,`status`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','9801010','cus_2hUD9SwS135vWZXJw',1,NULL,'76ece62b-bcfe-468c-8a78-839aeaa8c5fa',1,'2017-10-24 22:40:39','2017-11-14 16:29:18'),(2,'a83f0f76c2afad4f5d7260824430b798','Manuel','Rosales','many@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','6699333627',NULL,2,NULL,NULL,2,'2017-10-25 13:12:13','2017-11-02 12:17:08');
+insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`tipo`,`red_social`,`player_id`,`status`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','9801010','cus_2hUD9SwS135vWZXJw',1,NULL,'76ece62b-bcfe-468c-8a78-839aeaa8c5fa',1,'2017-10-24 22:40:39','2017-11-14 16:29:18'),(2,'a83f0f76c2afad4f5d7260824430b798','Manuel','Rosales','many@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','6699333627',NULL,2,NULL,NULL,1,'2017-10-25 13:12:13','2017-11-02 12:17:08'),(3,'a83f0f76c2afad4f5d7260824430b798','Arturo','López','artulo@hotmail.com','http://cocoinbox.bsmx.tech/public/img/user_perfil/default.jpg','95345645',NULL,2,NULL,NULL,1,'2017-11-22 16:47:35','2017-11-22 16:47:35');
 
 /*Table structure for table `usuario_direcciones` */
 
@@ -378,7 +379,7 @@ CREATE TABLE `usuario_direcciones` (
 
 /*Data for the table `usuario_direcciones` */
 
-insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`colonia`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga Colonia Jardines de universidad ',NULL,'5125','16','Jalisco','Zapopan','MX','45110',0,0,'','','2017-10-17 21:17:15','2017-10-17 21:17:24');
+insert  into `usuario_direcciones`(`id`,`usuario_id`,`recibidor`,`calle`,`colonia`,`num_ext`,`num_int`,`estado`,`ciudad`,`pais`,`codigo_postal`,`residencial`,`is_main`,`latitud`,`longitud`,`created_at`,`updated_at`) values (1,1,'Conrado Antonio Carrillo Rosales','Salvador Madariaga','Jardines de universidad','5125','16','Jalisco','Zapopan','MX','45110',0,0,'','','2017-10-17 21:17:15','2017-10-17 21:17:24');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -258,15 +258,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
 
                             <button type="submit" class="btn btn-primary" id="guardar_horario">
                                 <i class="fa fa-spinner fa-spin" style="display: none;"></i>
                                 Guardar
                             </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         </form>
-                        {{-- @include('horarios.tabla') --}}
                     </div>
                 </div>
             </div>

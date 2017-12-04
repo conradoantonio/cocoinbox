@@ -79,43 +79,52 @@ input:-webkit-autofill {
                             </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="comprobante_domicilio">Comprobante de domicilio</label>
+                                    <label for="comprobante_domicilio">Comprobante de domicilio
+                                        <a id="com_dom_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                            <span>
+                                                <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                    </label>
                                     <input type="file" class="form-control" id="comprobante_domicilio" name="comprobante_domicilio">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="licencia">Licencia</label>
+                                    <label for="licencia">Licencia
+                                        <a id="lic_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                            <span>
+                                                <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                    </label>
                                     <input type="file" class="form-control" id="licencia" name="licencia">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="solicitud_trabajo">Solicitud de trabajo</label>
+                                    <label for="solicitud_trabajo">Solicitud de trabajo
+                                        <a id="sol_tra_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                            <span>
+                                                <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                    </label>
                                     <input type="file" class="form-control" id="solicitud_trabajo" name="solicitud_trabajo">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="credencial_elector">Credencial de elector</label>
+                                    <label for="">Credencial de elector 
+                                        <a id="cre_ele_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                            <span>
+                                                <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                    </label>
                                     <input type="file" class="form-control" id="credencial_elector" name="credencial_elector">
                                 </div>
                             </div>
-                            {{-- <div class="col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <label>
-                                        Cargar foto del vehículo. <i class="fa fa-car" aria-hidden="true"></i>
-                                        @if (isset($sendenboy))
-                                            @if (strpos($sendenboy->vehicle_photo, 'jpg') || strpos($sendenboy->vehicle_photo, 'jpeg') || strpos($sendenboy->vehicle_photo, 'png'))
-                                                <a id="1" href="{{url('')}}/{{$sendenboy->vehicle_photo}}" data-lightbox='roadtrip' data-title='Foto del vehículo'>
-                                                    (Ver imagen)
-                                                </a>
-                                            @endif
-                                        @endif
-                                    </label>
-                                    <input type="file" class="form-control" name="vehicle_photo" id="vehicle_photo">
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -160,6 +169,10 @@ input:-webkit-autofill {
 <script src="{{ asset('js/repartidoresAjax.js') }}"></script>
 <script>
 /*Código para cuando se ocultan los modal*/
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 $('#editar-repartidor').on('hidden.bs.modal', function (e) {
     $('#editar-repartidor div.form-group').removeClass('has-error');
     $('input.form-control').val('');
@@ -190,6 +203,21 @@ $('body').delegate('.editar-repartidor','click', function() {
     licencia = $(this).parent().siblings("td:nth-child(10)").text(),
     solicitud_trabajo = $(this).parent().siblings("td:nth-child(11)").text(),
     credencial_elector = $(this).parent().siblings("td:nth-child(12)").text(),
+
+    com_dom_ext = comprobante_domicilio.substr(comprobante_domicilio.length - 3);
+    lic_ext = licencia.substr(licencia.length - 3);
+    sol_tra_ext = solicitud_trabajo.substr(solicitud_trabajo.length - 3);
+    cre_ele_ext = credencial_elector.substr(credencial_elector.length - 3);
+    
+    $('a#com_dom_ext').attr('href', '{{url('')}}'+'/'+comprobante_domicilio);
+    $('a#lic_ext').attr('href', '{{url('')}}'+'/'+licencia);
+    $('a#sol_tra_ext').attr('href', '{{url('')}}'+'/'+solicitud_trabajo);
+    $('a#cre_ele_ext').attr('href', '{{url('')}}'+'/'+credencial_elector);
+
+    verificarDocumentos($('a#com_dom_ext'), com_dom_ext, 'Comprobante de domicilio');
+    verificarDocumentos($('a#lic_ext'), lic_ext, 'Licencia');
+    verificarDocumentos($('a#sol_tra_ext'), sol_tra_ext, 'Solicitud de trabajo');
+    verificarDocumentos($('a#cre_ele_ext'), cre_ele_ext, 'Credencial de elector');
 
     $("#editar-repartidor input#user_id").val(user_id);
     $("#editar-repartidor input#repartidor_id").val(repartidor_id);
@@ -229,5 +257,17 @@ $('body').delegate('.eliminar-repartidor, .bloquear-repartidor, .reactivar-repar
         eliminarBloquearRepartidor(id,status,correo,token);
     });
 });
+
+function verificarDocumentos(selector, ext, titulo) {
+    if (ext == 'jpg' || ext == 'png' || ext == 'jpeg' || ext == 'gif') {//Imagen
+        selector.removeAttr('target');
+        selector.attr('data-lightbox', 'roadtrip');
+        selector.attr('data-title', titulo);
+    } else if (ext == 'pdf') {//Archivo pdf
+        selector.attr('target', '_blank');
+        selector.removeAttr('data-lightbox');
+        selector.removeAttr('data-title');
+    }
+}
 </script>
 @endsection
