@@ -24,7 +24,7 @@ class LogController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
+        if (auth()->check()) {
             $title = 'Inicio';
             $menu = 'Inicio';
             $dashboard = $this->dashboard_data_admin();
@@ -32,7 +32,7 @@ class LogController extends Controller
 
             return view('admin.dashboard', ['title' => $title, 'menu' => $menu, 'dashboard' => json_decode($dashboard), 'ventas_semanales' => $ventas_semanales]);
         } else {
-            return redirect::to('/');
+            return redirect()->to('/');
         }
     }
 
@@ -44,10 +44,10 @@ class LogController extends Controller
      */
     public function store(loginRequest $request)
     {
-        if (Auth::attempt(['user' => $request['user'], 'password' => $request['password']])) {
-            return Redirect::to('dashboard');
+        if (auth()->attempt(['user' => $request['user'], 'password' => $request['password']])) {
+            return redirect()->to('dashboard');
         }
-        return Redirect::to('/');
+        return redirect()->to('/');
     }
 
     /**
@@ -103,18 +103,17 @@ class LogController extends Controller
 
         $array_wd = array();
         foreach ($query as $value) {
-            array_push($array_wd, $value->created_at);
+            $array_wd [] = $value->created_at->format('Y-m-d');
         }
 
         $numero_logs = array();
         foreach ($query as $value) {
             array_push($numero_logs, $value->Costo_total);
         }
-        
+
         $final_array = $semana;
-
         foreach ($final_array as $key => $value) { $final_array[$key] = 0; }
-
+        
         foreach ($array_wd as $key => $val) {
             $numero_logs[$key];
             $pasa = array_search($val, $semana);
