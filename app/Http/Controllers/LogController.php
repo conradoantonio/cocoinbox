@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\loginRequest;
 use App\Http\Controllers\Controller;
 use App\Usuario;
+use App\User;
 use App\Servicio;
 use App\Cotizaciones;
 use DB;
@@ -44,10 +45,24 @@ class LogController extends Controller
      */
     public function store(loginRequest $request)
     {
-        if (auth()->attempt(['user' => $request['user'], 'password' => $request['password']])) {
+        if (auth()->attempt(['user' => $request['user'], 'password' => $request['password'], 'status' => 1])) {
             return redirect()->to('dashboard');
+        } else {
+             $exist = User::where('user', $request['user'])->first();
+            if ( !$exist ) {
+                session()->forget('account');
+                $msg = [ 'user' => 'Usuario inválido'];
+            } else {
+                if ( !$exist->status ) {
+                    $msg = [ 'status' => 'No tienes acceso al panel'];
+                    session(['account' => $request['user']]);
+                } else {
+                    $msg = [ 'password' => 'Contraseña incorrecta'];
+                    session(['account' => $request['user']]);
+                }
+            }
+            return redirect()->back()->withErrors($msg);
         }
-        return redirect()->to('/');
     }
 
     /**
@@ -57,8 +72,8 @@ class LogController extends Controller
      */
     public function logout() 
     {
-        Auth::logout();
-        return Redirect('/');
+        auth()->logout();
+        return redirect('/');
     }
 
     /**

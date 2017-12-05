@@ -31,7 +31,7 @@ function obtenerInfoPedido(status,pedido_id,token) {
             $('span#repartidor_nombre_completo').text(setText($('span#repartidor_nombre_completo'), data.repartidor_nombre)+ ' ' +data.repartidor_apellido);
             if (data.repartidor_nombre != null) {
                 $('li#li_repartidor_foto').show();
-                $("img#repartidor_foto").attr("src", baseUrl+'/'+data.repartidor_foto);
+                $("img#repartidor_foto").attr("src", data.repartidor_foto);
             }
             $('span#puntuacion').text(setText($('span#puntuacion'), data.puntuacion));
             
