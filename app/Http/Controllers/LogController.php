@@ -87,8 +87,8 @@ class LogController extends Controller
         $main_data->usuarios_bloqueados_app = Usuario::usuarios_bloqueados_app();
         $main_data->total_servicios = Servicio::total_servicios();
         $main_data->total_vendido = Servicio::total_vendido();
-        $main_data->porcentaje_usuarios_bloqueados = round((($main_data->usuarios_bloqueados_app / $main_data->total_usuarios_app) * 100), 2, PHP_ROUND_HALF_DOWN);
-
+        $main_data->porcentaje_usuarios_bloqueados = $main_data->total_usuarios_app > 0 ? round((($main_data->usuarios_bloqueados_app / $main_data->total_usuarios_app) * 100), 2, PHP_ROUND_HALF_DOWN) : 0;
+        
         return json_encode($main_data);
     }
     
