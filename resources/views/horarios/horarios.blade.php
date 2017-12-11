@@ -4,7 +4,16 @@
 <link rel="stylesheet" href="{{ asset('plugins/bootstrap-select2/select2.css')}}"  type="text/css" media="screen"/>
 <link rel="stylesheet" href="{{ asset('plugins/jquery-datatable/css/jquery.dataTables.css')}}"  type="text/css" media="screen"/>
 <link rel="stylesheet" href="{{ asset('plugins/boostrap-clockpicker/bootstrap-clockpicker.min.css')}}"  type="text/css" media="screen"/>
-
+<style>
+    div.horario{
+        margin-bottom: 10px;
+        border: 2px solid #F7B758;
+        border-radius: 8px;
+    }
+    .no-padding-sides{
+        padding: 0;
+    }
+</style>
 <div class="text-center" style="margin: 20px;">
 
     <h2>Horarios</h2>
@@ -14,9 +23,20 @@
             <div class="grid simple ">
                 <div class="grid-title">
                     <div class="grid-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 no-padding-sides">
+                                <div class="alert alert-info alert-dismissible text-left" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                    <strong>Nota: </strong><br>
+                                    - Si se requiere inhabilitar un día, desactive la casilla "Abierto" en el día que no quiera permitir que los clientes realicen ventas.<br>
+                                    - El formato del horario es de 24 horas.<br>
+                                    - Procure que la hora de cierre sea mayor que la hora de inicio.<br>
+                                </div>
+                            </div>
+                        </div>
                         <form id="form_horario" action="{{url('horarios/editar')}}" enctype="multipart/form-data" method="POST" autocomplete="off">
                             <input type="hidden" name="_token" id="token" value="{!! csrf_token() !!}">
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario domingo</h4>
@@ -36,7 +56,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="domingo_final">Hora final</label>
+                                        <label for="domingo_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="domingo_final" name="domingo_final" value="{{$horarios->domingo->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -50,7 +70,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario lunes</h4>
@@ -70,7 +90,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="lunes_final">Hora final</label>
+                                        <label for="lunes_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="lunes_final" name="lunes_final" value="{{$horarios->lunes->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -84,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario martes</h4>
@@ -104,7 +124,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="martes_final">Hora final</label>
+                                        <label for="martes_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="martes_final" name="martes_final" value="{{$horarios->martes->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -119,7 +139,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario miércoles</h4>
@@ -139,7 +159,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="miercoles_final">Hora final</label>
+                                        <label for="miercoles_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="miercoles_final" name="miercoles_final" value="{{$horarios->miercoles->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -154,7 +174,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario jueves</h4>
@@ -174,7 +194,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="jueves_final">Hora final</label>
+                                        <label for="jueves_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="jueves_final" name="jueves_final" value="{{$horarios->jueves->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -189,7 +209,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario viernes</h4>
@@ -209,7 +229,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="viernes_final">Hora final</label>
+                                        <label for="viernes_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="viernes_final" name="viernes_final" value="{{$horarios->viernes->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -224,7 +244,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row horario">
                                 <div class="col-sm-12 col-xs-12 text-center">
                                     <div class="form-group">
                                         <h4>Horario sábado</h4>
@@ -244,7 +264,7 @@
                                 </div>
                                 <div class="col-sm-4 col-xs-12 clockpicker">
                                     <div class="form-group">
-                                        <label for="sabado_final">Hora final</label>
+                                        <label for="sabado_final">Hora cierre</label>
                                         <input type="text" class="form-control timepicker" id="sabado_final" name="sabado_final" value="{{$horarios->sabado->hora_fin}}" placeholder="Ej. 22:30">
                                     </div>
                                 </div>
@@ -286,5 +306,10 @@
  *=                                        Empiezan las funciones relacionadas a la tabla de horarios                                        =
  *=============================================================================================================================================
  */
+    $(function() {
+        $('.clockpicker ').clockpicker({
+            autoclose: true
+        });
+    });
 </script>
 @endsection
