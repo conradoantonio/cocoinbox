@@ -35,9 +35,9 @@
                                             {{-- <th>ID</th> --}}
                                             <th style="text-align: center;">Producto</th>
                                             <th style="text-align: center;">Precio unitario</th>
-                                            <th style="text-align: center;">Cantidad</th>
+                                            {{-- <th style="text-align: center;">Cantidad</th> --}}
                                             <th style="text-align: center;">Precio porción</th>
-                                            <th style="text-align: center;">Porciones adicionales (Por plato)</th>
+                                            <th style="text-align: center;">Porciones adicionales {{-- (Por plato) --}}</th>
                                             <th style="text-align: center;">Costo adicional porciones</th>
                                             <th style="text-align: center;">Subtotal</th>
                                         </thead>

@@ -171,6 +171,7 @@ Route::group(['prefix' => 'app'], function () {
 	Route::post('remover_pedido_favoritos','dataAppController@remover_pedido_favoritos');//Remueve un pedido como favorito y elimina también sus detalles.
 
 	#Rutas de la app del repartidor
+	Route::post('correo_solicitud','dataAppController@enviar_correo_solicitud_repartidor');//Envía un correo que envía datos de una persona que solicita ser repartidor de cocoinbox.
 	Route::post('encaminar_pedido','dataAppController@encaminar_pedido');//Marca como activo un pedido y guarda las coordenadas del repartidor.
 	Route::post('actualizar_coordenadas_repartidor','dataAppController@actualizar_coordenadas_repartidor');//Actualiza las coordenadas de un repartidor.
 	Route::post('obtener_coordenadas_pedido','dataAppController@obtener_coordenadas_pedido');//Obtiene las coordenadas de un pedido.

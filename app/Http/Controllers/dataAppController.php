@@ -410,6 +410,24 @@ class dataAppController extends Controller
     }
 
     /**
+     * Envía un correo que envía datos de una persona que solicita ser repartidor de cocoinbox.
+     *
+     * @param  Request $request
+     */
+    public function enviar_correo_solicitud_repartidor(Request $request)
+    {
+        $subject = "Cocoinbox | Solicitud de repartidor";
+        $to = 'anton_con@hotmail.com';
+
+        Mail::send('emails.nueva_solicitud_repartidor', ['nombre' => $request->nombre, 'telefono' => $request->telefono], function ($message)  use ($to, $subject)
+        {
+            $message->to($to);
+            $message->subject($subject);
+        });
+    }
+    
+
+    /**
      * Registra un nuevo inicio de sesión de la aplicación.
      *
      * @param  $id_usuario
@@ -560,6 +578,9 @@ class dataAppController extends Controller
 
             $costo_adicional = $this->calcular_costo_extra($request->productos);
 
+            $costo_adicional = $costo_adicional + $request->costo_kilometros + $request->comision;
+
+            return $costo_adicional;
             if ($costo_adicional) {
                 $order_args['tax_lines'] = array(
                     array(
@@ -582,6 +603,8 @@ class dataAppController extends Controller
             $servicio->correo_cliente = $request->correo;
             $servicio->customer_id_conekta = $customer_id_conekta;
             $servicio->costo_total = $order->amount;
+            $servicio->costo_kilometros = $request->costo_kilometros;
+            $servicio->comision = $request->comision;
             $servicio->telefono = $request->telefono;
             $servicio->tipo_pago = 'tarjeta';
             $servicio->status = 'paid';
@@ -774,6 +797,8 @@ class dataAppController extends Controller
         $servicio->usuario_id = $request->usuario_id;
         $servicio->nombre_cliente = $request->nombre;
         $servicio->correo_cliente = $request->correo;
+        $servicio->costo_kilometros = $request->costo_kilometros;
+        $servicio->comision = $request->comision;
         $servicio->telefono = $request->telefono;
         $servicio->tipo_pago = 'efectivo';
         $servicio->status = 'pending_payment';
@@ -796,6 +821,7 @@ class dataAppController extends Controller
         $servicio->save();
 
         $total = $this->guardar_detalles_servicio_efectivo($servicio->id, $request->productos);
+        $total = $total + $request->costo_kilometros + $request->comision;
 
         Servicio::where('id', $servicio->id)->update(['costo_total' => $total]);
 

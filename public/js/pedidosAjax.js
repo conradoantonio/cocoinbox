@@ -68,9 +68,9 @@ function obtenerInfoPedido(status,pedido_id,token) {
                         '<tr>'+
                             '<td class="text-center">'+items[key].nombre_producto+'</td>'+
                             '<td class="text-center">$'+(items[key].precio / 100)+'</td>'+
-                            '<td class="text-center">'+(items[key].cantidad)+'</td>'+
+                            /*'<td class="text-center">'+(items[key].cantidad)+'</td>'+*/
                             '<td class="text-center">'+(items[key].drink != 1 ? '$'+items[key].precio_porcion : 'No aplica')+'</td>'+
-                            '<td class="text-center">'+(items[key].drink != 1 ? (items[key].porciones_adicionales == "" ? '0' : items[key].porciones_adicionales) : 'No aplica')+'</td>'+
+                            '<td class="text-center">'+(items[key].drink != 1 ? (items[key].porciones_adicionales == "" ? '0' : items[key].porciones_adicionales * items[key].peso_porcion) + 'gr' : 'No aplica')+'</td>'+
                             '<td class="text-center">'+(subtotal_porciones != 1 ? '$'+subtotal_porciones : 'Sin cargos adicionales')+'</td>'+
                             '<td class="text-center">$'+(subtotal + subtotal_porciones)+'</td>'+
                         '</tr>'
@@ -82,7 +82,7 @@ function obtenerInfoPedido(status,pedido_id,token) {
                 '<tr>'+
                     '<td class="text-center"></td>'+
                     '<td class="text-center"></td>'+
-                    '<td class="text-center"></td>'+
+                    /*'<td class="text-center"></td>'+*/
                     '<td class="text-center"></td>'+
                     '<td class="text-center"></td>'+
                     '<td class="text-center bold">Costo total</td>'+
