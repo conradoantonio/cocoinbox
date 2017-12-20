@@ -580,7 +580,6 @@ class dataAppController extends Controller
 
             $costo_adicional = $costo_adicional + $request->costo_kilometros + $request->comision;
 
-            return $costo_adicional;
             if ($costo_adicional) {
                 $order_args['tax_lines'] = array(
                     array(

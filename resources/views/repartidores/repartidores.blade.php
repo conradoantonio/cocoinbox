@@ -80,7 +80,7 @@ input:-webkit-autofill {
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="comprobante_domicilio">Comprobante de domicilio
-                                        <a id="com_dom_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                        <a class="document-read" id="com_dom_ext" href="" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
                                             <span>
                                                 <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
                                             </span>
@@ -92,7 +92,7 @@ input:-webkit-autofill {
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="licencia">Licencia
-                                        <a id="lic_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                        <a class="document-read" id="lic_ext" href="" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
                                             <span>
                                                 <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
                                             </span>
@@ -104,7 +104,7 @@ input:-webkit-autofill {
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="solicitud_trabajo">Solicitud de trabajo
-                                        <a id="sol_tra_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                        <a class="document-read" id="sol_tra_ext" href="" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
                                             <span>
                                                 <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
                                             </span>
@@ -116,7 +116,7 @@ input:-webkit-autofill {
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="">Credencial de elector 
-                                        <a id="cre_ele_ext" href="http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
+                                        <a class="document-read" id="cre_ele_ext" href="" target="_blank" data-lightbox='roadtrip' data-title='Credencial de elector'>
                                             <span>
                                                 <i data-toggle="tooltip" data-placement="down" title="Ver documento" class="fa fa-eye" aria-hidden="true"></i>
                                             </span>
@@ -176,12 +176,15 @@ $(function () {
 $('#editar-repartidor').on('hidden.bs.modal', function (e) {
     $('#editar-repartidor div.form-group').removeClass('has-error');
     $('input.form-control').val('');
+    $('a.document-read').hide();
+
 });
 /*Fin de código para cuando se ocultan los modal*/
 
 $('body').delegate('button#nuevo_repartidor_app','click', function() {
     $('#editar-repartidor div.form-group').removeClass('has-error');
     $("form#form_repartidores").get(0).setAttribute('action', '{{url('repartidores/guardar')}}');
+    $('a.document-read').hide();
     $('input.form-control').val('');
     $("h4#gridSystemModalLabel").text('Nuevo repartidor');
     $('#editar-repartidor').modal();
@@ -263,6 +266,7 @@ function verificarDocumentos(selector, ext, titulo) {
         selector.removeAttr('target');
         selector.attr('data-lightbox', 'roadtrip');
         selector.attr('data-title', titulo);
+        selector.show();
     } else if (ext == 'pdf') {//Archivo pdf
         selector.attr('target', '_blank');
         selector.removeAttr('data-lightbox');

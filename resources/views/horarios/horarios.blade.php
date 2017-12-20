@@ -28,7 +28,7 @@
                                 <div class="alert alert-info alert-dismissible text-left" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                                     <strong>Nota: </strong><br>
-                                    - Si se requiere inhabilitar un día, desactive la casilla "Abierto" en el día que no quiera permitir que los clientes realicen ventas.<br>
+                                    - Si se requiere inhabilitar un día, desactive la casilla "Abierto" en el día que no quiera permitir que los clientes realicen compras.<br>
                                     - El formato del horario es de 24 horas.<br>
                                     - Procure que la hora de cierre sea mayor que la hora de inicio.<br>
                                 </div>

@@ -69,7 +69,7 @@ function obtenerInfoPedido(status,pedido_id,token) {
                             '<td class="text-center">'+items[key].nombre_producto+'</td>'+
                             '<td class="text-center">$'+(items[key].precio / 100)+'</td>'+
                             /*'<td class="text-center">'+(items[key].cantidad)+'</td>'+*/
-                            '<td class="text-center">'+(items[key].drink != 1 ? '$'+items[key].precio_porcion : 'No aplica')+'</td>'+
+                            '<td class="text-center">'+(items[key].drink != 1 ? '$'+items[key].precio_porcion + ' ('+ items[key].peso_porcion +'gr. por porción)' : 'No aplica')+'</td>'+
                             '<td class="text-center">'+(items[key].drink != 1 ? (items[key].porciones_adicionales == "" ? '0' : items[key].porciones_adicionales * items[key].peso_porcion) + 'gr' : 'No aplica')+'</td>'+
                             '<td class="text-center">'+(subtotal_porciones != 1 ? '$'+subtotal_porciones : 'Sin cargos adicionales')+'</td>'+
                             '<td class="text-center">$'+(subtotal + subtotal_porciones)+'</td>'+
@@ -79,6 +79,24 @@ function obtenerInfoPedido(status,pedido_id,token) {
             }
 
             $("table#detalle_pedido tbody").append(
+                '<tr>'+
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center"></td>'+
+                    /*'<td class="text-center"></td>'+*/
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center bold">Comisión</td>'+
+                    '<td class="text-center">$'+(data.comision/100)+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center"></td>'+
+                    /*'<td class="text-center"></td>'+*/
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center"></td>'+
+                    '<td class="text-center bold">Kilometraje</td>'+
+                    '<td class="text-center">$'+(data.costo_kilometros/100)+'</td>'+
+                '</tr>'+
                 '<tr>'+
                     '<td class="text-center"></td>'+
                     '<td class="text-center"></td>'+
