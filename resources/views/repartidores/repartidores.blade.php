@@ -192,6 +192,7 @@ $('body').delegate('button#nuevo_repartidor_app','click', function() {
 
 $('body').delegate('.editar-repartidor','click', function() {
     $('#editar-repartidor div.form-group').removeClass('has-error');
+    $('a.document-read').hide();
     $('input.form-control').val('');
     $("form#form_repartidores").get(0).setAttribute('action', '{{url('repartidores/editar')}}');
     user_id = $(this).parent().siblings("td:nth-child(1)").text(),
@@ -271,6 +272,7 @@ function verificarDocumentos(selector, ext, titulo) {
         selector.attr('target', '_blank');
         selector.removeAttr('data-lightbox');
         selector.removeAttr('data-title');
+        selector.show();
     }
 }
 </script>

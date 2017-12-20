@@ -28,7 +28,7 @@ btn.on('click', function() {
         guardarRepartidor(btn);
     }
     else {
-        swal("Corrija los siguientes campos para continuar: ", msgError);
+        swal("Corrija los siguientes campos para continuar: ", inputs);
         return false;
     }
 });
