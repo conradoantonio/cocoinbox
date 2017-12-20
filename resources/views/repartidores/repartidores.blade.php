@@ -145,9 +145,7 @@ input:-webkit-autofill {
                 <div class="grid-title">
                     <h4>Opciones <span class="semi-bold">adicionales</span></h4>
                     <div>
-                        
-                        <button type="button" class="btn btn-info {{count($repartidores) ? '' : 'hide'}}" id="exportar_repartidores_excel"><i class="fa fa-download" aria-hidden="true"></i> Exportar repartidores (app)</button>
-                        <button type="button" class="btn btn-primary" id="nuevo_repartidor_app"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo repartidor (app)</button>
+                        <button type="button" class="btn btn-primary" id="nuevo_repartidor_app"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo repartidor</button>
                     </div>
                     <div class="grid-body">
                         <div class="table-responsive" id="tabla_repartidores">        

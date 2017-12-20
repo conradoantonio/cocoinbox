@@ -111,7 +111,7 @@
 				                                <div class="col-sm-6 col-xs-12">
 						                            <div class="form-group">
 						                                <label for="">Fecha</label>
-						                                <input type="text" name="fecha" class='form-control' id='fecha_individual'>
+						                                <input type="text" name="fecha" class='form-control' id='fecha_individual' placeholder="Ej. 2020-12-27">
 						                            </div>
 						                        </div>
 			                    				<div class="col-sm-12 col-xs-12">
