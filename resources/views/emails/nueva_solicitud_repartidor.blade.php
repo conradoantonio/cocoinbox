@@ -91,9 +91,8 @@
 		</div>
 		<div class="recibo_body" style="width: 75%;margin: auto;border: 1px solid black;border-radius: 0px 0px 5px 5px;padding-bottom: 15px;">
 			<div class="instrucciones" style="margin: auto;">
-				<h4 style="margin-left: 1em;">Solicitud</h4>
+				<h4 style="margin-left: 1em;">Se le informa que se ha generado una nueva solicitud de repartidor desde la aplicación de cocoinbox, los datos de la persona son: </h4>
 				<ol style="width: 90%;">
-					<li style="padding: 5px 0px;text-align: justify;">Se le informa que se ha generado una nueva solicitud de repartidor desde la aplicación de cocoinbox, los datos de la persona son:</li>
 					<li style="padding: 5px 0px;text-align: justify;">- Nombre: {{$nombre}}</li>
 					<li style="padding: 5px 0px;text-align: justify;">- Teléfono: {{$telefono}}</li>
 				</ol>

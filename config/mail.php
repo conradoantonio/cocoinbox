@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.bsmx.tech'),
+    'host' => env('MAIL_HOST', 'mail.cocoinboxapp.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'cocoinbox@bsmx.tech', 'name' => 'COCOINBOX'],
+    'from' => ['address' => 'soporte@cocoinboxapp.com', 'name' => 'COCOINBOX'],
 
     /*
     |--------------------------------------------------------------------------
