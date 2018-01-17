@@ -92,18 +92,6 @@ Route::post('/preguntas_frecuentes/guardar_pregunta', 'ConfiguracionController@g
 Route::post('/preguntas_frecuentes/editar_pregunta', 'ConfiguracionController@editar_pregunta');//Edita una pregunta
 Route::post('/preguntas_frecuentes/eliminar_pregunta', 'ConfiguracionController@eliminar_pregunta');//Elimina una pregunta
 
-/*-- Rutas para la pestaña de estilistas --*/
-Route::get('/estilistas','EstilistasController@index');//Carga la tabla de estilistas.
-Route::post('/estilistas/guardar_estilista', 'EstilistasController@guardar_estilista');//Guarda un estilista
-Route::post('/estilistas/editar_estilista', 'EstilistasController@editar_estilista');//Edita un estilista
-Route::post('/estilistas/cambiar_status_estilista', 'EstilistasController@cambiar_status');//Cambia el status de un estilista o lo elimina según sea el caso
-
-/*-- Rutas para la pestaña de estilistas --*/
-Route::get('/menu_app','MenuController@index');//Muestra las pestañas del menú principal de la aplicación.
-Route::post('/menu_app/menus_categorias','MenuController@menus_categorias');//Muestra las categorías de un menú.
-Route::post('/menu_app/categorias/cargar_subcategorias','MenuController@cargar_subcategorias');//Muestra las categorías de un menú.
-Route::get('/categorias/{categoria_id}/subcategorias','MenuController@subcategorias_1');//Muestra las subcategorias dada una categoria.
-
 /*-- Rutas para la pestaña de subcategorías --*/
 Route::get('/subcategorias_app','MenuController@subcategorias');//Muestra las subcategorías de la aplicación.
 Route::post('/subcategorias_app/guardar','MenuController@subcategorias_guardar');//Guarda una subcategoría.

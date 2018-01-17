@@ -151,7 +151,7 @@ class RepartidoresController extends Controller
     public function cargar_mapa(Request $request) 
     {
         $title = $menu = "Geolocalización";
-
+        $coordenadas = null;
         $repartidores = Usuario::leftJoin('repartidores', 'repartidores.usuario_id', '=', 'usuario.id')
         ->where('tipo', 2)
         ->where('status', 1)
